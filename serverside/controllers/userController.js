@@ -37,7 +37,7 @@ export const login = async(req,res) => {
 
         const userId = {id: existUser._id};
         const token = jwt.sign(userId, process.env.jwtsecret);
-        return res.status(200).json({status: 200, success: true, message: "Logged in successfully.", token: token, user: existUser});
+        return res.status(200).json({status: 200, success: true, message: "Logged in successfully.", token: token, userdata: existUser});
     } catch (error) {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }
@@ -47,11 +47,13 @@ export const login = async(req,res) => {
 export const getCurrentUser = async(req,res) => {
     try {
         const {token} = req.body;
-
+       
         const decodeToken = jwt.verify(token, process.env.jwtsecret);
         const userId = decodeToken.id;
         const user = await users.findById(userId).select("-password").exec();
+        console.log(user,"checkuser")
         if(user){
+            
             return res.status(200).json({status: 200, success: true, data: user});
         }
     } catch (error) {
