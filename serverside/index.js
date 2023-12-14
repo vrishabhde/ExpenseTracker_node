@@ -18,4 +18,9 @@ mongoose.connect(process.env.MONGODB)
 .then(()=>{console.log("DB connection established")})
 .catch(()=>{console.log("DB error:",err)})
 
-app.listen(process.env.PORT,()=>{console.log(`working on port: ${process.env.PORT}`)});
+const PORT = process.env.PORT || 6000;
+
+if(process.env.NODE_ENV == "production"){
+    app.use(express.static("clientside/build"));
+}
+app.listen(PORT,()=>{console.log(`working on port: ${PORT}`)});
