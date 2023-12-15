@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGODB)
 .then(()=>{console.log("DB connection established")})
 .catch(()=>{console.log("DB error:",err)})
 
+
 const PORT = process.env.PORT || 6000;
 
 if(process.env.NODE_ENV == "production"){
