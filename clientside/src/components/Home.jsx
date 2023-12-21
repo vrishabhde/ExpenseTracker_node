@@ -13,6 +13,20 @@ const Home = () => {
         setshow(true);
     };
 
+    const navigateUpdateuser = () => {
+        if (getuserdata && getuserdata.data && getuserdata.data._id) {
+            const userId = getuserdata.data._id;
+            router(`/updateuser/${userId}`);
+          }
+        
+      };
+    const navigateChangepassword = () => {
+        if (getuserdata && getuserdata.data && getuserdata.data._id) {
+            const userId = getuserdata.data._id;
+            router(`/changepassword/${userId}`);
+          }
+        
+      };
 
     const bgImage = {
         width: "100%",
@@ -37,7 +51,12 @@ const Home = () => {
                 <h1>Welcome To </h1>
                 <h2>User Management System ...!</h2>
 
-                {getuserdata ? <><h1 style={{color:"green"}}>{getuserdata?.data?.username}</h1><div onClick={handleclick}>Logout</div></> : <>
+                {getuserdata ? <><div>
+                    <h1 style={{ color: "green" }}>{getuserdata?.data?.username}</h1>
+                    <div style={{width:"150px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px"}} onClick={handleclick}>Logout</div>
+                    <button style={{marginTop:"30px", width:"150px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px"}} onClick={navigateUpdateuser}>update user profile</button>
+                    <button style={{marginTop:"30px", width:"150px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px"}} onClick={navigateChangepassword}>Change Password</button>
+                </div></> : <>
                     {show ? null : (
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <button style={{ width: "80px", height: "35px", border: "1px solid grey", borderRadius: "3px", backgroundColor: "green", color: "white", fontSize: "18px", fontWeight: "bold", border: "none" }} onClick={handlelogin}>login</button>
@@ -46,7 +65,7 @@ const Home = () => {
                 </>}
 
             </div>
-
+                       
         </>
     )
 };

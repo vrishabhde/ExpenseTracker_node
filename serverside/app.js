@@ -21,7 +21,5 @@ mongoose.connect(process.env.MONGODB)
 
 const PORT = process.env.PORT || 8000;
 
-// if(process.env.NODE_ENV == "production"){
-//     app.use(express.static("clientside/build"));
-// }
+
 app.listen(PORT,()=>{console.log(`working on port: ${PORT}`)});

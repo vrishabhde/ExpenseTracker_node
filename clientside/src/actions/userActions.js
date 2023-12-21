@@ -1,14 +1,20 @@
 import axios from "axios"
 
-export const userLogin = (userdata) =>{
+export const userLogin = (userdata) => {
 
     return {
-        type : "Login",
+        type: "Login",
         payload: userdata
     }
 }
+export const updateUser = (userData) => {
+    return {
+        type: "UPDATE_USER",
+        payload: userData
+    }
+};
 
-export const userLogout = () =>{
+export const userLogout = () => {
     return {
         type: "Logout"
     }
@@ -16,24 +22,24 @@ export const userLogout = () =>{
 
 
 export const currentUser = () => {
-    return async(dispatch)=>{
+    return async (dispatch) => {
         try {
             const token = JSON.parse(localStorage.getItem("token"));
-          
-            if(token){
-                const response = await axios.post("http://localhost:8000/api/getcurrentuser",{token})
-               
-              
-                if(response.data){
-                    console.log("working")
-                    console.log(response.data,"response.data.currentuser")
-                    dispatch(userLogin(response.data));
+
+            if (token) {
+                const response = await axios.post("http://localhost:8000/api/getcurrentuser", { token })
+
+
+                if (response.data) {
+                dispatch(userLogin(response.data));
                 }
             }
         } catch (error) {
             dispatch(userLogout());
-            console.log(error,"catch error")
-            // alert(error.response.data.message);
-        }   
+            console.log(error, "catch error")
+            alert(error.response.data.message);
+        }
     }
 }
+
+

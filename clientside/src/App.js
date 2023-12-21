@@ -5,6 +5,8 @@ import Register from './components/Register';
 import Login from './components/Login';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './actions/userActions';
+import Updateuser from './components/Updateuser';
+import Changepassword from './components/Changepassword';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
       <Route exact path='/' element={<Home />} />
       <Route exact path='/register' element={<Register />} />
       <Route exact path='/login' element={<Login />} />
+      <Route exact path='/updateuser/:id' element={<Updateuser />} />
+      <Route exact path='/changepassword/:id' element={<Changepassword />} />
     </Routes>
 
   );
