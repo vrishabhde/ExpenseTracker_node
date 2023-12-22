@@ -43,3 +43,23 @@ export const currentUser = () => {
 }
 
 
+
+export const setBudget = (budget, userId) => {
+    return {
+        type: "SET_BUDGET",
+        payload: { budget, userId }
+    }
+};
+
+
+export const addExpense = (description, amount, userId) => {
+    return {
+        type: "ADD_EXPENSE",
+        payload: { description, amount, userId }
+    }
+};
+
+ 
+  
+
+

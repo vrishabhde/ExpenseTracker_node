@@ -30,7 +30,18 @@ const userSchema = new Schema({
         type:Boolean,
         default:true
     },
-    expenses:[]
+    expenses:[
+            {
+                description: { type: String, required: true },
+                amount: { type: Number, required: true },
+                date: { type: Date, default: Date.now }
+            }
+        ],
+
+    budget:{
+        type:Number,
+        default:0
+    }
 
 })
 
