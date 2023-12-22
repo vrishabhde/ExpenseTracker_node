@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { currentUser } from './actions/userActions';
 import Updateuser from './components/Updateuser';
 import Changepassword from './components/Changepassword';
+import Expenses from './components/Expenses';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Route exact path='/login' element={<Login />} />
       <Route exact path='/updateuser/:id' element={<Updateuser />} />
       <Route exact path='/changepassword/:id' element={<Changepassword />} />
+      <Route exact path='/expenses' element={<Expenses />} />
     </Routes>
 
   );

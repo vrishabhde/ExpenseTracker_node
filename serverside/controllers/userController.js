@@ -126,29 +126,49 @@ export const changePassword = async (req, res) => {
 
 
 
+// export const setBudget = async (req, res) => {
+//     try {
+//         const { budget } = req.body;
+//         const {id} = req.params;
+//         if (!budget || isNaN(budget) || budget < 0) {
+//             return res.status(400).json({ status: 400, success: false, message: "Invalid budget value." });
+//         }
+//         const user = await users.findById(id);
+
+//         if (!user) return res.status(404).json({ status: 404, success: false, message: "User not found." });
+
+//         user.budget = budget;
+
+//         await user.save();
+
+//         return res.status(200).json({ status: 200, success: true, message: "Budget set successfully." });
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ status: 500, success: false, message: "Internal Server Error." });
+//     }
+// };
+
+
+
 export const setBudget = async (req, res) => {
     try {
-        const { budget, id } = req.body;
-
-        if (!budget || isNaN(budget) || budget < 0) {
-            return res.status(400).json({ status: 400, success: false, message: "Invalid budget value." });
-        }
-        const user = await users.findById(id);
-
-        if (!user) return res.status(404).json({ status: 404, success: false, message: "User not found." });
-
-        user.budget = budget;
-
-        await user.save();
-
-        return res.status(200).json({ status: 200, success: true, message: "Budget set successfully." });
+      const { budget } = req.body;
+      const { id } = req.params;
+  
+      if (!budget || isNaN(budget) || budget < 0) {
+        return res.status(400).json({ status: 400, success: false, message: 'Invalid budget value.' });
+      }
+  
+      const user = await users.findByIdAndUpdate(id, { budget }, { new: true });
+  
+      if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
+  
+      return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ status: 500, success: false, message: "Internal Server Error." });
+      console.error(error);
+      return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
     }
-};
-
-
+  };
 
 export const addExpense = async (req, res) => {
     try {

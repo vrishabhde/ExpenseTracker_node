@@ -10,7 +10,7 @@ router.post("/login",authLogin,login);
 router.post("/getcurrentuser",getCurrentUser);
 router.post("/updateuser/:id",updateuser);
 router.post("/changePassword/:id",changePassword);
-router.post("/setBudget", setBudget);
+router.post("/setBudget/:id", setBudget);
 router.post("/addExpense", addExpense);
 
 export default router;
