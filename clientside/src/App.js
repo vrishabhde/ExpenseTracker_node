@@ -9,6 +9,7 @@ import Updateuser from './components/Updateuser';
 import Changepassword from './components/Changepassword';
 import Budget from './components/Budget';
 import Addexpense from './components/Addexpense';
+import Income from './components/Income';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route exact path='/updateuser/:id' element={<Updateuser />} />
       <Route exact path='/changepassword/:id' element={<Changepassword />} />
       <Route exact path='/budget' element={<Budget />} />
+      <Route exact path='/income' element={<Income />} />
       <Route exact path='/addexpense' element={<Addexpense />} />
     </Routes>
 

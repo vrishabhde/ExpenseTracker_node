@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Budget from "./Budget";
+import Income from "./Income";
 
 const Addexpense = () => {
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
+    console.log(getuserdata,"getUserdata")
     const [expense, setexpense] = useState({ category: "", description: "", amount: 0 });
 
     const handlechange = (e) => {
@@ -28,6 +31,7 @@ const Addexpense = () => {
             console.log(response, "response");
             if (response.data.success) {
                 alert(response.data.message);
+                window.location.reload();
                 setexpense({ category: "", description: "", amount: 0 });
             }else{
                 alert("something went wrong")
@@ -44,6 +48,12 @@ const Addexpense = () => {
 
     return (
         <>
+        <div>
+            {getuserdata ? <> <Budget />
+        <Income /></> : <>adsg</> }
+       
+        </div>
+        
             <form onSubmit={handlesubmit}>
                 <h2>Expenses</h2>
 
