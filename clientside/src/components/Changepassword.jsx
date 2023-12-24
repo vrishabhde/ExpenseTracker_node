@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Changepassword = () => {
     const router = useNavigate();
     const { id } = useParams();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     console.log(currentUser, "currentUser")
     const [formData, setFormData] = useState({

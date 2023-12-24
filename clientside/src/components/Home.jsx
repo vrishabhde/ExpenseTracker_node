@@ -59,7 +59,7 @@ const Home = () => {
                 </div></> : <>
                     {show ? null : (
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                            <button style={{ width: "80px", height: "35px", border: "1px solid grey", borderRadius: "3px", backgroundColor: "green", color: "white", fontSize: "18px", fontWeight: "bold", border: "none" }} onClick={handlelogin}>login</button>
+                            <button style={{ width: "80px", height: "35px", border: "1px solid grey", borderRadius: "3px", backgroundColor: "green", color: "white", fontSize: "18px", fontWeight: "bold" }} onClick={handlelogin}>login</button>
                         </div>
                     )}
                 </>}

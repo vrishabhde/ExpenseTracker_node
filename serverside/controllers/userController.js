@@ -155,8 +155,8 @@ export const changePassword = async (req, res) => {
 export const setBudget = async (req, res) => {
     try {
       const { budget,id } = req.body;
-    //   const { id } = req.params;
-  console.log(budget,id)
+
+  console.log(typeof(budget))
       if (!budget || isNaN(budget) || budget < 0) {
         return res.status(400).json({ status: 400, success: false, message: 'Invalid budget value.' });
       }
@@ -174,31 +174,60 @@ export const setBudget = async (req, res) => {
 
 
 
-export const addExpense = async (req, res) => {
+  export const addExpense = async (req, res) => {
     try {
-        const { description, amount, id } = req.body;
+        const { category, description, amount, id } = req.body;
 
-        if (!description || !amount) return res.status(400).json({ status: 400, success: false, message: "Description and amount are required." });
+        if (!category || !description || !amount) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Description and amount are required."
+            });
+        }
 
         const user = await users.findById(id);
+console.log(user.budget,"userbudget")
+        if (!user) {
+            return res.status(404).json({
+                status: 404,
+                success: false,
+                message: "User not found."
+            });
+        }
 
-        if (!user) return res.status(404).json({ status: 404, success: false, message: "User not found." });
         const budget = parseInt(user.budget);
-
         const expenseAmount = parseInt(amount);
 
-        if (budget > 0 && budget < expenseAmount) {
-            return res.status(400).json({ status: 400, success: false, message: "Expense exceeds the budget." });
+      if (budget < expenseAmount) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Expense exceeds the budget."
+            });
         }
-        user.expenses.push({ description, amount: expenseAmount });
 
+        // Add the expense to the user's expenses array
+        user.expenses.push({ category, description, amount: expenseAmount });
+
+        // Update the user's budget
         user.budget -= expenseAmount;
 
+        // Save the updated user document
         await user.save();
 
-        return res.status(201).json({ status: 201, success: true, message: "Expense added successfully." });
+        return res.status(201).json({
+            status: 201,
+            success: true,
+            message: "Expense added successfully."
+        });
     } catch (error) {
-        return res.status(500).json({ status: 500, success: false, message: "Internal Server Error." });
+        console.error(error);
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Internal Server Error."
+        });
     }
 };
 

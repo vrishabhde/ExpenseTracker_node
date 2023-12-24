@@ -11,6 +11,6 @@ router.post("/getcurrentuser",getCurrentUser);
 router.post("/updateuser/:id",updateuser);
 router.post("/changePassword/:id",changePassword);
 router.post("/budget", setBudget);
-router.post("/addExpense", addExpense);
+router.post("/addexpense", addExpense);
 
 export default router;
