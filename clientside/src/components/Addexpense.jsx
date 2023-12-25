@@ -56,7 +56,7 @@ const Addexpense = () => {
         
             <form onSubmit={handlesubmit}>
                 <h2>Expenses</h2>
-
+                <h2>saving: {getuserdata?.data?.savings}</h2>
                 <div>
                     <label>Category:</label>
                     <input type="text" onChange={handlechange} name="category" value={expense.category} />

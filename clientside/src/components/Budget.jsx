@@ -35,6 +35,7 @@ const Budget = () => {
         <>
         <h1>Set Budget</h1>
         <p>{getuserdata?.data?.budget}</p>
+      
         <form onSubmit={handlesubmit}>
         <input type="number" placeholder="setbudget" onChange={handlechange} name="budget"  />
         <input type="submit" value="setbudget" />

@@ -163,7 +163,7 @@ export const setBudget = async (req, res) => {
 
         // Add the new budget value to the existing budget
         user.budget += parseInt(budget);
-
+      
         if(user.budget <= user.income){
         await user.save();
         return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
@@ -218,7 +218,7 @@ console.log(user.budget,"userbudget")
 
         // Update the user's budget
         user.budget -= expenseAmount;
-
+        user.savings = user.income - parseInt(user.budget)
         // Save the updated user document
         await user.save();
 
