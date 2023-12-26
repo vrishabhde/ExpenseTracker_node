@@ -11,6 +11,7 @@ import Budget from './components/Budget';
 import Addexpense from './components/Addexpense';
 import Income from './components/Income';
 import Savings from './components/Savings';
+import UpdateExpenses from './components/UpdateExpenses';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
       <Route exact path='/income' element={<Income />} />
       <Route exact path='/saving' element={<Savings />} />
       <Route exact path='/addexpense' element={<Addexpense />} />
+      <Route exact path='/updateExpense/:expense_id' element={<UpdateExpenses />} />
     </Routes>
 
   );

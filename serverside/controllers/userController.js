@@ -87,19 +87,19 @@ export const updateuser = async (req, res) => {
 
 export const changePassword = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const { password, newPassword, confirmNewPassword } = req.body;
 
         if (!password) return res.status(400).json({ status: 400, success: false, message: "Old Password is required." });
 
-        if (!newPassword)  return res.status(400).json({ status: 400, success: false, message: "New Password is required." });
+        if (!newPassword) return res.status(400).json({ status: 400, success: false, message: "New Password is required." });
 
         if (!confirmNewPassword) return res.status(400).json({ status: 400, success: false, message: "Confirm Password is required." });
 
         const user = await users.findById(id).exec();
 
         if (!user) return res.status(404).json({ status: 404, success: false, message: "User not found." });
-    
+
         const checkPassword = await bcrypt.compare(password, user.password);
 
         if (!checkPassword) return res.status(400).json({ status: 400, success: false, message: "Incorrect old password." });
@@ -129,29 +129,61 @@ export const changePassword = async (req, res) => {
 
 export const setIncome = async (req, res) => {
     try {
-      const { income,id } = req.body;
+        const { income, id } = req.body;
 
-      if (!income || isNaN(income) || income < 0) {
-        return res.status(400).json({ status: 400, success: false, message: 'Invalid income value.' });
-      }
-  
-      const user = await users.findByIdAndUpdate(id, { income }, { new: true });
-  console.log(user,"user")
-      if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
-  
-      return res.status(200).json({ status: 200, success: true, message: 'income set successfully.', income: user.income });
+        if (!income || isNaN(income) || income < 0) {
+            return res.status(400).json({ status: 400, success: false, message: 'Invalid income value.' });
+        }
+
+        const user = await users.findByIdAndUpdate(id, { income }, { new: true });
+        console.log(user, "user")
+        if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
+
+        return res.status(200).json({ status: 200, success: true, message: 'income set successfully.', income: user.income });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
+        console.error(error);
+        return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
     }
-  };
+};
+
+
+// export const setBudget = async (req, res) => {
+//     try {
+//         const { budget, id } = req.body;
+
+//         console.log(typeof (budget));
+
+//         if (!budget || isNaN(budget) || budget < 0) {
+//             return res.status(400).json({ status: 400, success: false, message: 'Invalid budget value.' });
+//         }
+
+//         const user = await users.findById(id);
+
+//         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
+//        const expenseAmount = user.expenses.reduce((sum, obj) => sum + obj.amount, 0);
+//        console.log(expenseAmount,"expenseAmount")
+//         if(user.budget+user.savings+expenseAmount <= user.income){
+//         user.budget += parseInt(budget);
+//       user.savings =user.income - user.budget
+
+//         await user.save();
+//         return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
+
+//     }else{
+//         return res.status(404).json({ status: 404, success: false, message: "you can't set budget more than your income." }); 
+
+//     }
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
+//     }
+// };
+
 
 
 export const setBudget = async (req, res) => {
     try {
         const { budget, id } = req.body;
-
-        console.log(typeof (budget));
 
         if (!budget || isNaN(budget) || budget < 0) {
             return res.status(400).json({ status: 400, success: false, message: 'Invalid budget value.' });
@@ -160,27 +192,32 @@ export const setBudget = async (req, res) => {
         const user = await users.findById(id);
 
         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
-       const expenseAmount = user.expenses.reduce((sum, obj) => sum + obj.amount, 0);
-        if(user.budget+user.savings+expenseAmount <= user.income){
-        user.budget += parseInt(budget);
-      user.savings =user.income - user.budget
-       
-        await user.save();
-        return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
 
-    }else{
-        return res.status(404).json({ status: 404, success: false, message: "you can't set budget more than your income." }); 
-    
-    }
+
+        if (user.budget == 0) {
+            // First time budget setting
+            user.budget += parseInt(budget);
+            user.savings = user.income - user.budget;
+
+            await user.save();
+            return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
+        } else if (user.budget > 0 && budget <= user.savings) {
+            user.budget += parseInt(budget);
+            user.savings = user.savings - budget;
+            await user.save();
+            return res.status(200).json({ status: 200, success: true, message: "budget set successfully 2nd time" });
+        } else {
+            return res.status(400).json({ status: 400, message: "budget exceeds limit", success: false })
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
     }
 };
 
- 
 
-  export const addExpense = async (req, res) => {
+
+export const addExpense = async (req, res) => {
     try {
         const { category, description, amount, id } = req.body;
 
@@ -193,7 +230,7 @@ export const setBudget = async (req, res) => {
         }
 
         const user = await users.findById(id);
-console.log(user.budget,"userbudget")
+        console.log(user.budget, "userbudget")
         if (!user) {
             return res.status(404).json({
                 status: 404,
@@ -205,7 +242,7 @@ console.log(user.budget,"userbudget")
         const budget = parseInt(user.budget);
         const expenseAmount = parseInt(amount);
 
-      if (budget < expenseAmount) {
+        if (budget < expenseAmount) {
             return res.status(400).json({
                 status: 400,
                 success: false,
@@ -218,7 +255,7 @@ console.log(user.budget,"userbudget")
 
         // Update the user's budget
         user.budget -= expenseAmount;
-        
+
         // Save the updated user document
         await user.save();
 
@@ -238,7 +275,68 @@ console.log(user.budget,"userbudget")
 };
 
 
+export const getExpenses = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const checkuser = await users.findById(id).exec();
+        if (!checkuser) return res.status(400).json({ status: 400, success: false, message: "user not found" });
 
+        return res.status(200).json({ status: 200, success: true, expensesList: checkuser.expenses })
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Internal Server Error."
+        });
+    }
+}
+
+
+export const updateExpenses = async (req, res) => {
+    try {
+        const { id, category, description, amount,expense_id } = req.body;
+        
+        const user = await users.findById(id).exec();
+        if (!user) return res.status(400).json({ status: 400, success: false, message: "user not found" });
+
+        const arrayExpense = user.expenses;
+        console.log(arrayExpense, "objid")
+
+
+        // const filterExpense = arrayExpense.filter((k)=>k._id == expenseid)
+
+        const updateExpense = arrayExpense.find((obj) => obj._id == expense_id)
+        if (updateExpense) {
+            updateExpense.category = category;
+            updateExpense.description = description;
+            if (amount < updateExpense.amount ) {
+                user.budget = user.budget + (updateExpense.amount - amount)
+                if(user.budget < 0) return res.status(400).json({status:400, success:false, message:"something went wrong regarding amount"})
+                updateExpense.amount = amount;
+                await user.save();
+                return res.status(200).json({ status: 200, success: true, message: "expense updated successfully" })
+
+            } else if (amount > updateExpense.amount ) {
+                user.budget = user.budget - (amount - updateExpense.amount)
+                if(user.budget < 0) return res.status(400).json({status:400, success:false, message:"something went wrong regarding amount"})
+                updateExpense.amount = amount;
+                await user.save();
+                return res.status(200).json({ status: 200, success: true, message: "expense updateddd successfully" })
+
+            } else if(user.budget == 0 && amount > updateExpense.amount){
+              return res.status(400).json({status:400, success:false, message:"you cannot add amount at this time"})
+            }else{
+                updateExpense.amount = amount;
+                await user.save();
+                return res.status(200).json({ status: 200, success: true, message: "expense updated successfully" })
+
+            }
+
+        }
+    } catch (error) {
+        return res.status(500).json({ status: 500, success: false, message: "internal server error" })
+    }
+}
 
 
 

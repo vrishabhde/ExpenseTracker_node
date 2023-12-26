@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Budget from "./Budget";
 import Income from "./Income";
 import Savings from "./Savings";
+import GetExpenses from "./GetExpenses";
 
 const Addexpense = () => {
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
@@ -51,7 +52,7 @@ const Addexpense = () => {
         <>
         <div>
             {getuserdata ? <> <Budget />
-        <Income /><Savings /></> : <>adsg</> }
+        <Income /><Savings /><GetExpenses /></> : <>adsg</> }
        
         </div>
         
