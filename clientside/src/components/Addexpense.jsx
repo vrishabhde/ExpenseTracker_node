@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import Budget from "./Budget";
 import Income from "./Income";
+import Savings from "./Savings";
 
 const Addexpense = () => {
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
@@ -50,13 +51,13 @@ const Addexpense = () => {
         <>
         <div>
             {getuserdata ? <> <Budget />
-        <Income /></> : <>adsg</> }
+        <Income /><Savings /></> : <>adsg</> }
        
         </div>
         
             <form onSubmit={handlesubmit}>
                 <h2>Expenses</h2>
-                <h2>saving: {getuserdata?.data?.savings}</h2>
+                
                 <div>
                     <label>Category:</label>
                     <input type="text" onChange={handlechange} name="category" value={expense.category} />

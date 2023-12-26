@@ -160,11 +160,11 @@ export const setBudget = async (req, res) => {
         const user = await users.findById(id);
 
         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
-
-        // Add the new budget value to the existing budget
+       const expenseAmount = user.expenses.reduce((sum, obj) => sum + obj.amount, 0);
+        if(user.budget+user.savings+expenseAmount <= user.income){
         user.budget += parseInt(budget);
-      
-        if(user.budget <= user.income){
+      user.savings =user.income - user.budget
+       
         await user.save();
         return res.status(200).json({ status: 200, success: true, message: 'Budget set successfully.', budget: user.budget });
 
@@ -218,7 +218,7 @@ console.log(user.budget,"userbudget")
 
         // Update the user's budget
         user.budget -= expenseAmount;
-        user.savings = user.income - parseInt(user.budget)
+        
         // Save the updated user document
         await user.save();
 
