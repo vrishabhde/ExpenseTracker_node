@@ -1,35 +1,34 @@
+
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 
 const GetExpenses = () => {
     const router = useNavigate();
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
-    console.log(getuserdata, "get expense list data");
+
     const reduxdata = getuserdata?.data?.expenses;
-
-    // console.log(typeof(reduxdata[0].amount),"reduxdata")
-    const [expenseList, setExpenseList] = useState([]);
-    const id = getuserdata?.data?._id;
-    // useEffect(() => {
-    //     const getExpensesList = async () => {
-    //         try {
-    //             const response = await axios.post("http://localhost:8000/api/getExpenses", { id })
-    //             if (response.data.success) {
-    //                 setExpenseList(response.data.expensesList)
-    //             }
-    //         } catch (error) {
-
-    //         }
-    //     }
-    //     getExpensesList();
-    // }, [id])
-    console.log(expenseList, "expenseLisgwgt")
-
+const id = getuserdata?.data?._id
         const handleupdate = (expense_id) => {
             console.log(expense_id,"idddd")
-            router(`/updateExpense/${expense_id}`)
+            router(`/updateExpense/${expense_id}`);
+        }
+
+        const handledelete =async (expense_id) => {
+            console.log(expense_id,"idddd")
+            try {
+                const response=await axios.post(`http://localhost:8000/api/deleteExpense`,{expense_id,id});
+                if(response?.data?.success){
+                    alert(response?.data?.message)
+                    window.location.reload();
+                }
+            } catch (error) {
+                if(!error.response.data.success){
+                    alert(error.response.data.message)
+                }
+            }
+            // router(`/deleteExpense/${expense_id}`);
         }
     return (
         <>
@@ -42,7 +41,8 @@ const GetExpenses = () => {
                         <p>amount: {e.amount}</p>
                         <p>date: {e.date}</p>
                         <button onClick={()=>handleupdate(e._id)}>Update</button>
-                        <button>Delete</button>
+                    
+                        <button onClick={()=>handledelete(e._id)} >Delete</button>
                     </div>
                 )) : <p>loading..</p>}
             </div>
