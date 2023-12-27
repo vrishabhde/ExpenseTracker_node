@@ -57,21 +57,58 @@ const Updateuser = () => {
 
     return (
         <>
-        <div style={{backgroundColor:"lightpink", width:"400px", height:"600px",margin:"auto",marginTop:"100px",cursor:"pointer", display:"flex", flexDirection:"column",justifyContent:"center",alignItems:"center",borderRadius:"10px"}}>
-        <h1 style={{color:"purple"}}>Update User Profile</h1>
-        <form style={{display:"flex", flexDirection:"column",justifyContent:"space-between"}} onSubmit={handleSubmit}>
-                <label>Email: </label>
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="email" onChange={handleChange} name="email" value={data.email} /><br />
+      <div className="flex items-center justify-center h-screen">
+  <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md border border-gray-300 hover:shadow-lg hover:border-blue-500 transition duration-300 ease-in-out">
+    <h1 className="text-2xl font-bold mb-4">Update User Profile</h1>
+    <form onSubmit={handleSubmit} className="space-y-4">
 
-                <label>Contact: </label>
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="text" onChange={handleChange} name="contact" value={data.contact} /><br />
+      <div className="flex flex-col">
+        <label htmlFor="email" className="text-sm font-bold">Email:</label>
+        <input
+          type="email"
+          id="email"
+          onChange={handleChange}
+          name="email"
+          value={data.email}
+          className="w-full border p-2 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
 
-                <label>Username: </label>
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="text" onChange={handleChange} name="username" value={data.username} /><br />
+      <div className="flex flex-col">
+        <label htmlFor="contact" className="text-sm font-bold">Contact:</label>
+        <input
+          type="text"
+          id="contact"
+          onChange={handleChange}
+          name="contact"
+          value={data.contact}
+          className="w-full border p-2 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
 
-                <input style={{width:"100px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px"}} type="submit" value="Submit" />
-            </form>
-            </div>
+      <div className="flex flex-col">
+        <label htmlFor="username" className="text-sm font-bold">Username:</label>
+        <input
+          type="text"
+          id="username"
+          onChange={handleChange}
+          name="username"
+          value={data.username}
+          className="w-full border p-2 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      <input
+        type="submit"
+        value="Submit"
+        className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-700 transition duration-300 ease-in-out"
+      />
+
+    </form>
+  </div>
+</div>
+
+
         </>
     );
 };

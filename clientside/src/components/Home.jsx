@@ -3,61 +3,56 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-    const [show, setshow] = useState(false);
+    const [show, setShow] = useState(false);
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
-    console.log(getuserdata, "getuserdatagdkv");
 
     const router = useNavigate();
+
     const handlelogin = () => {
         router("/login");
-        setshow(true);
+        setShow(true);
     };
 
-    const navigateUpdateuser = () => {
-        if (getuserdata && getuserdata.data && getuserdata.data._id) {
-            const userId = getuserdata.data._id;
-            router(`/updateuser/${userId}`);
-          }
-        
-      };
-    const navigateChangepassword = () => {
-        if (getuserdata && getuserdata.data && getuserdata.data._id) {
-            const userId = getuserdata.data._id;
-            router(`/changepassword/${userId}`);
-          }
-        
-      };
+    const handleExpense = () => {
+        router("/addexpense");
+        setShow(true);
+    };
 
-  
-    const handleclick = () => {
-        localStorage.removeItem("token");
-        alert("logout success")
-        window.location.reload();
-    }
     return (
-        <>
+        <div className="flex flex-col items-center justify-center h-screen">
+  <h1 className="text-4xl font-bold">Welcome To</h1>
+  <h2 className="text-2xl mb-4">Expense Tracker Management System ...!</h2>
 
-            <div>
+  {/* Enlarged image with Tailwind CSS styling */}
+  <img
+    src="https://source.unsplash.com/800x400/?expense-tracker" // Replace with your actual image URL
+    alt="Expense Tracker"
+    className="mb-4 rounded shadow-lg w-full lg:w-2/3 xl:w-1/2"
+  />
 
-                <h1>Welcome To </h1>
-                <h2>User Management System ...!</h2>
+  {getuserdata ? (
+    <>
+      {" "}
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+        onClick={handleExpense}
+      >
+        Add Your Expenses
+      </button>
+    </>
+  ) : (
+    <>
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded"
+        onClick={handlelogin}
+      >
+        Explore Now
+      </button>
+    </>
+  )}
+</div>
 
-                {getuserdata ? <><div>
-                    <h1>{getuserdata?.data?.username}</h1>
-                    <div onClick={handleclick}>Logout</div>
-                    <button onClick={navigateUpdateuser}>update user profile</button>
-                    <button onClick={navigateChangepassword}>Change Password</button>
-                </div></> : <>
-                    {show ? null : (
-                        <div>
-                            <button onClick={handlelogin}>login</button>
-                        </div>
-                    )}
-                </>}
-
-            </div>
-                       
-        </>
-    )
+    );
 };
+
 export default Home;

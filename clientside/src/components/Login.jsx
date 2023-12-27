@@ -36,14 +36,49 @@ const Login = () => {
         router("/register")
     }
     return (
-        <div style={{backgroundColor:"lightpink", width:"350px", height:"450px",margin:"auto",marginTop:"200px",cursor:"pointer", display:"flex", flexDirection:"column",justifyContent:"center",alignItems:"center",borderRadius:"10px"}}>
-            <h1 style={{color:"purple"}}>Sign In</h1>
-            <form style={{display:"flex", flexDirection:"column",justifyContent:"space-between"}} onSubmit={handleSubmit}>
-                <input style={{marginTop:"20px",width:"300px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="email" placeholder='Enter Your Email' name="email" value={userdata.email} onChange={handleChange} required /> <br />
-                <input style={{width:"300px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" placeholder='Enter Your Password' name="password" value={userdata.password} onChange={handleChange} required /><br />
-                <button style={{width:"100px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px",marginTop:"30px"}} type="submit">Login</button>
-                <p style={{marginLeft:"40px"}}>Don't Have an Account <span onClick={handleclick} style={{color:"red",fontWeight:"bold"}}>Sign Up</span></p>
-            </form>
+        <div className="flex items-center justify-center h-screen bg-blue-500">
+            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
+                <h1 className="text-4xl font-bold mb-4 text-blue-500">Sign In</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="email"
+                            placeholder="Enter Your Email"
+                            name="email"
+                            value={userdata.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="password"
+                            placeholder="Enter Your Password"
+                            name="password"
+                            value={userdata.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button
+                        className="bg-blue-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"
+                    >
+                        Login
+                    </button>
+                    <p className="mt-4 text-sm text-blue-500">
+                        Don't Have an Account? <span onClick={handleclick} className="text-red-500 font-bold cursor-pointer">Sign Up</span>
+                    </p>
+                </form>
+            </div>
         </div>
     );
 };

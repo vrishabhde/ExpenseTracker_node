@@ -40,22 +40,58 @@ const Changepassword = () => {
     };
 
     return (
-        <div style={{backgroundColor:"lightpink", width:"400px", height:"600px",margin:"auto",marginTop:"100px",cursor:"pointer", display:"flex", flexDirection:"column",justifyContent:"center",alignItems:"center",borderRadius:"10px"}}>
-            <h2 style={{color:"purple"}}>{currentUser?.data?.username}</h2>
-            <form style={{display:"flex", flexDirection:"column",justifyContent:"space-between"}} onSubmit={handleSubmit}>
-
-                <label style={{ fontWeight: "bold" }}>Old Password: </label>
-                <input style={{width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" placeholder='Enter your previous password' name="password" value={formData.password} onChange={handleChange} /><br />
-
-                <label style={{ fontWeight: "bold" }}>New Password: </label>
-                <input style={{width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" placeholder='Enter your new password' name="newPassword" value={formData.newPassword} onChange={handleChange} /><br />
-
-                <label style={{ fontWeight: "bold" }}>Confirm New Password: </label>
-                <input style={{width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" placeholder='Confirm your password' name="confirmNewPassword" value={formData.confirmNewPassword} onChange={handleChange} /><br />
-                <br />
-                <input style={{width:"180px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"13px"}} type="submit" value="Submit Changed Password" />
-            </form>
-        </div>
+        <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+        <h2 className="text-2xl font-bold mb-4">{currentUser?.data?.username}</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+      
+          <div className="flex flex-col">
+            <label htmlFor="password" className="text-sm font-bold mb-2">Old Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder='Enter your previous password'
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+      
+          <div className="flex flex-col">
+            <label htmlFor="newPassword" className="text-sm font-bold mb-2">New Password:</label>
+            <input
+              type="password"
+              id="newPassword"
+              placeholder='Enter your new password'
+              name="newPassword"
+              value={formData.newPassword}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+      
+          <div className="flex flex-col">
+            <label htmlFor="confirmNewPassword" className="text-sm font-bold mb-2">Confirm New Password:</label>
+            <input
+              type="password"
+              id="confirmNewPassword"
+              placeholder='Confirm your password'
+              name="confirmNewPassword"
+              value={formData.confirmNewPassword}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+      
+          <input
+            type="submit"
+            value="Submit Changed Password"
+            className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer"
+          />
+      
+        </form>
+      </div>
+      
     );
 };
 

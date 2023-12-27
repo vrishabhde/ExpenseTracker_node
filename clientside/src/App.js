@@ -12,6 +12,7 @@ import Addexpense from './components/Addexpense';
 import Income from './components/Income';
 import Savings from './components/Savings';
 import UpdateExpenses from './components/UpdateExpenses';
+import Navbar from './global/Navbar';
 
 
 function App() {
@@ -22,20 +23,26 @@ function App() {
     dispatch(currentUser())
   }, [dispatch]);
 
+  // const apiRoutes = ["/api/register", "/api/login", "*"];
+  // const renderRoutes = !apiRoutes.includes(location.pathname);
+  
   return (
-
-    <Routes>
-      <Route exact path='/' element={<Home />} />
-      <Route exact path='/register' element={<Register />} />
-      <Route exact path='/login' element={<Login />} />
-      <Route exact path='/updateuser/:id' element={<Updateuser />} />
-      <Route exact path='/changepassword/:id' element={<Changepassword />} />
-      <Route exact path='/budget' element={<Budget />} />
-      <Route exact path='/income' element={<Income />} />
-      <Route exact path='/saving' element={<Savings />} />
-      <Route exact path='/addexpense' element={<Addexpense />} />
-      <Route exact path='/updateExpense/:expense_id' element={<UpdateExpenses />} />
-    </Routes>
+    <>
+    <Navbar />
+      
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route exact path='/register' element={<Register />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/updateuser/:id' element={<Updateuser />} />
+        <Route exact path='/changepassword/:id' element={<Changepassword />} />
+        <Route exact path='/budget' element={<Budget />} />
+        <Route exact path='/income' element={<Income />} />
+        <Route exact path='/saving' element={<Savings />} />
+        <Route exact path='/addexpense' element={<Addexpense />} />
+        <Route exact path='/updateExpense/:expense_id' element={<UpdateExpenses />} />
+      </Routes>
+    </>
 
   );
 }

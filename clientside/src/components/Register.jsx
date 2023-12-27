@@ -25,17 +25,89 @@ const Register = () => {
     };
 
     return (
-        <div style={{backgroundColor:"lightpink", width:"400px", height:"600px",margin:"auto",marginTop:"150px",cursor:"pointer", display:"flex", flexDirection:"column",justifyContent:"center",alignItems:"center",borderRadius:"10px"}}>
-            <h1 style={{color:"purple"}}>Sign up</h1>
-            <form style={{display:"flex", flexDirection:"column",justifyContent:"space-between"}} onSubmit={handleSubmit}>
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="text" name="username" placeholder='Enter Your Username' value={userInfo.username} onChange={handleChange} required /><br />
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="email" name="email" placeholder='Enter Your Email' value={userInfo.email} onChange={handleChange} required /><br />
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" name="password" placeholder='Enter Your Password' value={userInfo.password} onChange={handleChange} required /><br />
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="password" name="confirmpassword" placeholder='Enter Your Confirmpassword' value={userInfo.confirmpassword} onChange={handleChange} required /><br />
-                <input style={{marginTop:"20px",width:"330px",height:"40px",borderRadius:"4px",backgroundColor:"lightgrey",border:"none"}} type="text" name="contact" placeholder='Enter Your Contact Number' value={userInfo.contact} onChange={handleChange} required /><br /><br />
-                <button style={{width:"100px",height:"40px",color:"white", margin:"auto", backgroundColor:"purple", borderRadius:"8px",border:"none",fontWeight:"bold",fontSize:"18px"}} type="submit">Register</button>
-            </form>
-        </div>
+        <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-lg border border-gray-300">
+        <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="username" className="block text-sm font-bold mb-2">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder='Enter Your Username'
+              value={userInfo.username}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+      
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-bold mb-2">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder='Enter Your Email'
+              value={userInfo.email}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+      
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm font-bold mb-2">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder='Enter Your Password'
+              value={userInfo.password}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+      
+          <div className="mb-4">
+            <label htmlFor="confirmpassword" className="block text-sm font-bold mb-2">Confirm Password:</label>
+            <input
+              type="password"
+              id="confirmpassword"
+              name="confirmpassword"
+              placeholder='Enter Your Confirm Password'
+              value={userInfo.confirmpassword}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+      
+          <div className="mb-4">
+            <label htmlFor="contact" className="block text-sm font-bold mb-2">Contact Number:</label>
+            <input
+              type="text"
+              id="contact"
+              name="contact"
+              placeholder='Enter Your Contact Number'
+              value={userInfo.contact}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
+      
+          <button
+            type="submit"
+            className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+      
+
     );
 };
 

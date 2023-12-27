@@ -32,20 +32,39 @@ const id = getuserdata?.data?._id
         }
     return (
         <>
-            <h1>List of you Expenses</h1>
-            <div>
-                {reduxdata ? reduxdata?.map((e, i) => (
-                    <div style={{ border: "1px solid red", marginBottom: "10px" }} key={i}>
-                        <p>category: {e.category}</p>
-                        <p>description: {e.description}</p>
-                        <p>amount: {e.amount}</p>
-                        <p>date: {e.date}</p>
-                        <button onClick={()=>handleupdate(e._id)}>Update</button>
-                    
-                        <button onClick={()=>handledelete(e._id)} >Delete</button>
-                    </div>
-                )) : <p>loading..</p>}
-            </div>
+           <>
+  <h1 className="text-2xl font-bold mb-4"></h1>
+  <div>
+    {reduxdata ? (
+      reduxdata.map((e, i) => (
+        <div
+          className="border border-red-500 mb-4 p-4 rounded"
+          key={i}
+        >
+          <p className="mb-2"><span className="font-bold">Category:</span> {e.category}</p>
+          <p className="mb-2"><span className="font-bold">Description:</span> {e.description}</p>
+          <p className="mb-2"><span className="font-bold">Amount:</span> {e.amount}</p>
+          <p className="mb-2"><span className="font-bold">Date:</span> {e.date}</p>
+          <button
+            className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
+            onClick={() => handleupdate(e._id)}
+          >
+            Update
+          </button>
+          <button
+            className="bg-red-500 text-white py-1 px-3 rounded"
+            onClick={() => handledelete(e._id)}
+          >
+            Delete
+          </button>
+        </div>
+      ))
+    ) : (
+      <p>Loading...</p>
+    )}
+  </div>
+</>;
+
         </>
     )
 }
