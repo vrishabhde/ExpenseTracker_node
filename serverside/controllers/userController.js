@@ -2,12 +2,13 @@ import users from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { newPasswordValidation } from "../utils/newPasswordValidation.js";
+import { emailValidation } from "../utils/emailValidation.js";
 
 
 export const registration = async (req, res) => {
     try {
 
-        const { username, email, password, contact } = req.body;
+        const { firstname, lastname, username, email, password, countryCode, contact } = req.body;
 
         const checkContact = await users.findOne({ email }).exec();
 
@@ -16,7 +17,7 @@ export const registration = async (req, res) => {
         const hashpassword = await bcrypt.hash(password, 10);
 
         const newUser = new users({
-            username, email, contact,
+            firstname, lastname, username, email, contact, countryCode,
             password: hashpassword
         });
 
@@ -65,17 +66,51 @@ export const getCurrentUser = async (req, res) => {
 }
 
 
+
+
+
 export const updateuser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { email, contact, username } = req.body;
+        const { firstname, lastname, email, contact } = req.body;
 
         if (!id) {
             return res.status(400).json({ success: false, status: 400, message: "id is required" });
         }
 
+        // Check if the email or contact already exists in the database for other users
+        const existingEmail = await users.findOne({
+            $and: [
+                { _id: { $ne: id } }, // Exclude the current user
+                { $or: [{ email }] }
+            ]
+        }).exec();
 
-        const response = await users.findByIdAndUpdate(id, { email, contact, username }, { new: true }).exec();
+        if (existingEmail) {
+            // Either email or contact is already taken
+            return res.status(409).json({ success: false, status: 409, message: "Email already exists, please try with another Email..!" });
+        }
+
+        const existingContact = await users.findOne({
+            $and: [
+                { _id: { $ne: id } }, // Exclude the current user
+                { $or: [{ contact }] }
+            ]
+        }).exec();
+
+        if (existingContact) {
+            // Either email or contact is already taken
+            return res.status(409).json({ success: false, status: 409, message: "contact is already used" });
+        }
+
+        try {
+            emailValidation(email);
+
+        } catch (error) {
+            return res.status(400).json({ status: 400, success: false, message: error.message });
+        }
+        // Update the user profile
+        const response = await users.findByIdAndUpdate(id, { email, contact, firstname, lastname }, { new: true }).exec();
         console.log(response, "response");
         return res.status(200).json({ success: true, message: "Your profile updated successfully", data: response });
     } catch (error) {
@@ -104,15 +139,19 @@ export const changePassword = async (req, res) => {
 
         if (!checkPassword) return res.status(400).json({ status: 400, success: false, message: "Incorrect old password." });
 
+
         try {
             newPasswordValidation(newPassword);
         } catch (error) {
             return res.status(400).json({ status: 400, success: false, message: error.message });
         }
 
+
+        if (newPassword == password) return res.status(400).json({ status: 400, success: false, message: "current password & new password should not be same." })
         if (newPassword !== confirmNewPassword) {
             return res.status(400).json({ status: 400, success: false, message: "New password and confirm new password must be identical." });
         }
+
 
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedNewPassword;
@@ -161,8 +200,10 @@ export const setBudget = async (req, res) => {
 
         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
 
-
-        if (user.budget == 0 && user.savings == 0) {
+        if (user.income == 0) {
+            return res.status(400).json({ status: 400, success: false, message: "Initially you should have to provide your Income ." })
+        }
+        else if (user.budget == 0 && user.savings == 0) {
             // First time budget setting
             user.budget += parseInt(budget);
             user.savings = user.income - budget;
@@ -198,13 +239,16 @@ export const setBudget = async (req, res) => {
 
 export const addExpense = async (req, res) => {
     try {
-        const { category, description, amount, id } = req.body;
+        const { category, description, amount,date, id } = req.body;
+        // return res.send("working")
+        console.log(category, description, amount, id, "............../74/")
+        
 
         if (!category || !description || !amount) {
             return res.status(400).json({
                 status: 400,
                 success: false,
-                message: "Description and amount are required."
+                message: "Category, Description and amount are required."
             });
         }
 
@@ -230,8 +274,7 @@ export const addExpense = async (req, res) => {
         }
 
         // Add the expense to the user's expenses array
-        user.expenses.push({ category, description, amount: expenseAmount });
-
+        user.expenses.push({ category, description, amount: expenseAmount, date });
         // Update the user's budget
         user.budget -= expenseAmount;
 
@@ -322,7 +365,7 @@ export const updateExpenses = async (req, res) => {
 export const deleteExpense = async (req, res) => {
     try {
         const { id, expense_id } = req.body
-        
+
         const user = await users.findById(id).exec();
         if (!user) return res.status(400).json({ status: 400, success: false, message: "user not found" });
         const expensesArray = user.expenses;
@@ -330,12 +373,12 @@ export const deleteExpense = async (req, res) => {
             if (expensesArray[i]._id == expense_id) {
 
                 user.budget = user.budget + expensesArray[i].amount;
- 
+
                 expensesArray.splice(i, 1);
 
                 await user.save();
 
-                return res.status(200).json({ status: 200, success: true,message:"deleted"})
+                return res.status(200).json({ status: 200, success: true, message: "deleted" })
 
             }
         }

@@ -3,10 +3,18 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema({
     
+    firstname:{
+        type:String,
+        required:true
+    },
+    lastname:{
+        type:String,
+        required:true
+    },
     username:{
         type:String,
         required:true,
-        unique:false
+        unique:true
     },
     email:{
         type:String,
@@ -18,9 +26,21 @@ const userSchema = new Schema({
         required:true
     },
     contact:{
-        type:String,
-        required:true,
-        unique:true
+        type: String,
+        required: true,
+        unique:true,
+        validate: {
+            validator: function (v) {
+                return /\d{10}/.test(v);
+            },
+            message: props => `${props.value} is not a valid phone number!`
+        }
+    },
+    countryCode: {
+        type: String,
+        required: true,
+        enum: ["+91", "+92"]
+      
     },
     isadmin:{
         type:Boolean,
@@ -33,9 +53,14 @@ const userSchema = new Schema({
     expenses:[
             {
                 description: { type: String, required: true },
-                category: { type: String, required: true },
+                category: {
+                    type: String,
+                    required: true,
+                    enum: ['Food', 'Transportation', 'Housing', 'Entertainment', 'Other']
+                },
                 amount: { type: Number, required: true },
-                date: { type: Date, default: Date.now }
+                date: { type: Date, default: Date.now },
+                
             }
         ],
 

@@ -1,7 +1,7 @@
 
 import { useSelector } from "react-redux";
 
-const Savings = () => {
+const Spending = () => {
     const getuserdata = useSelector((state) => state.userReducer.currentUser);
     console.log(getuserdata,"getuserdatata")
   
@@ -9,10 +9,10 @@ const Savings = () => {
     return (
         <>
        <div className="group w-[70%] h-16 mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
-        <p className=" text-xl font-bold"> Balance : ₹ {getuserdata?.data?.savings}</p>
+        <p className=" text-xl font-bold"> Total Spending : ₹ {getuserdata?.data?.savings}</p>
         
         </div>
         </>
     )
 }
-export default Savings;
+export default Spending;

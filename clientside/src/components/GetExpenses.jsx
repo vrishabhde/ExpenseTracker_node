@@ -20,7 +20,7 @@ const id = getuserdata?.data?._id
             try {
                 const response=await axios.post(`http://localhost:8000/api/deleteExpense`,{expense_id,id});
                 if(response?.data?.success){
-                    alert(response?.data?.message)
+                   window.confirm('Are you sure you want to delete this expense?');
                     window.location.reload();
                 }
             } catch (error) {
@@ -33,30 +33,33 @@ const id = getuserdata?.data?._id
     return (
         <>
            <>
-  <h1 className="text-2xl font-bold mb-4"></h1>
+  <h1 className="text-2xl font-bold mb-5"></h1>
   <div>
     {reduxdata ? (
       reduxdata.map((e, i) => (
-        <div
-          className="border border-red-500 mb-4 p-4 rounded"
+        <div className="group w-[100%] h-40 mb-4 border border-red-900 flex flex-col items-left p-2 rounded  hover:bg-blue-200 ease-in-out"
+          // className=" h-40 border border-red-900 mb-4 p-2 rounded "
           key={i}
         >
-          <p className="mb-2"><span className="font-bold">Category:</span> {e.category}</p>
-          <p className="mb-2"><span className="font-bold">Description:</span> {e.description}</p>
-          <p className="mb-2"><span className="font-bold">Amount:</span> {e.amount}</p>
-          <p className="mb-2"><span className="font-bold">Date:</span> {e.date}</p>
-          <button
-            className="bg-blue-500 text-white py-1 px-3 rounded mr-2"
+          <p className="mb-1"><span className="font-bold">Category:</span> {e.category}</p>
+          <p className="mb-1"><span className="font-bold">Description:</span> {e.description}</p>
+          <p className="mb-1"><span className="font-bold">Amount:</span> {e.amount}</p>
+          <p className="mb-1"><span className="font-bold">Date:</span> {e.date}</p>
+           <div>
+
+           <button
+            className="w-28 bg-blue-500 text-white py-1 px-3 rounded mr-2"
             onClick={() => handleupdate(e._id)}
           >
             Update
           </button>
           <button
-            className="bg-red-500 text-white py-1 px-3 rounded"
+            className="w-28 bg-red-500 text-white py-1 px-3 rounded"
             onClick={() => handledelete(e._id)}
           >
             Delete
           </button>
+           </div>
         </div>
       ))
     ) : (

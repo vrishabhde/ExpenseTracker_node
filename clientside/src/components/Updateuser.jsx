@@ -14,8 +14,8 @@ const Updateuser = () => {
     const [data, setData] = useState({
         email: '',
         contact: '',
-        username: '',
-        password: '',
+        firstname: '',
+        lastname: '',
     });
 
     useEffect(() => {
@@ -23,7 +23,8 @@ const Updateuser = () => {
             setData({
                 email: currentUser.data.email || '',
                 contact: currentUser.data.contact || '',
-                username: currentUser.data.username || '',
+                firstname: currentUser.data.firstname || '',
+                lastname: currentUser.data.lastname || '',
             });
         }
     }, [currentUser]);
@@ -38,7 +39,8 @@ const Updateuser = () => {
         try {
             const response = await axios.post(`http://localhost:8000/api/updateuser/${id}`, {
                 email: data?.email,
-                username: data?.username,
+                firstname: data?.firstname,
+                lastname: data?.lastname,
                 contact: data?.contact
             });
             console.log(response, "response")
@@ -59,7 +61,7 @@ const Updateuser = () => {
         <>
       <div className="flex items-center justify-center h-screen">
   <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md border border-gray-300 hover:shadow-lg hover:border-blue-500 transition duration-300 ease-in-out">
-    <h1 className="text-2xl font-bold mb-4">Update User Profile</h1>
+    <h1 className="text-2xl font-bold mb-4">Update Profile</h1>
     <form onSubmit={handleSubmit} className="space-y-4">
 
       <div className="flex flex-col">
@@ -87,17 +89,28 @@ const Updateuser = () => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="username" className="text-sm font-bold">Username:</label>
+        <label htmlFor="firstname" className="text-sm font-bold">First Name:</label>
         <input
           type="text"
-          id="username"
+          id="firstname"
           onChange={handleChange}
-          name="username"
-          value={data.username}
+          name="firstname"
+          value={data.firstname}
           className="w-full border p-2 rounded focus:outline-none focus:border-blue-500"
         />
       </div>
 
+      <div className="flex flex-col">
+        <label htmlFor="lastname" className="text-sm font-bold">Last Name:</label>
+        <input
+          type="text"
+          id="lastname"
+          onChange={handleChange}
+          name="lastname"
+          value={data.lastname}
+          className="w-full border p-2 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
       <input
         type="submit"
         value="Submit"

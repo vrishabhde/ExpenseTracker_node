@@ -13,6 +13,7 @@ import Income from './components/Income';
 import Savings from './components/Savings';
 import UpdateExpenses from './components/UpdateExpenses';
 import Navbar from './global/Navbar';
+import PieChart from './components/PieChart';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route exact path='/saving' element={<Savings />} />
         <Route exact path='/addexpense' element={<Addexpense />} />
         <Route exact path='/updateExpense/:expense_id' element={<UpdateExpenses />} />
+        <Route exact path='/chart' element={<PieChart  />} />
       </Routes>
     </>
 
