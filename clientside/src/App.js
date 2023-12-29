@@ -14,6 +14,8 @@ import Savings from './components/Savings';
 import UpdateExpenses from './components/UpdateExpenses';
 import Navbar from './global/Navbar';
 import PieChart from './components/PieChart';
+import Spending from './components/Spending';
+import SortCategory from './components/SortCategory';
 
 
 function App() {
@@ -43,6 +45,8 @@ function App() {
         <Route exact path='/addexpense' element={<Addexpense />} />
         <Route exact path='/updateExpense/:expense_id' element={<UpdateExpenses />} />
         <Route exact path='/chart' element={<PieChart  />} />
+        <Route exact path='/spending' element={<Spending  />} />
+        <Route exact path='/sorting' element={<SortCategory  />} />
       </Routes>
     </>
 

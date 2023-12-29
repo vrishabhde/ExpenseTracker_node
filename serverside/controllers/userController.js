@@ -173,12 +173,24 @@ export const setIncome = async (req, res) => {
         if (!income || isNaN(income) || income < 0) {
             return res.status(400).json({ status: 400, success: false, message: 'Invalid income value.' });
         }
-
-        const user = await users.findByIdAndUpdate(id, { income }, { new: true });
-        console.log(user, "user")
-        if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
-
-        return res.status(200).json({ status: 200, success: true, message: 'income set successfully.', income: user.income });
+        const check = await users.findById(id).exec();
+        if (check.income == 0) {
+            const user = await users.findByIdAndUpdate(id, { income }, { new: true });
+            console.log(user, "user")
+            if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
+            return res.status(200).json({ status: 200, success: true, message: 'income set successfully.', income: user.income });
+        } else if (check.income > 0 && income > check.income) {
+            check.income = check.income + income;
+            await check.save();
+            return res.status(200).json({ status: 200, success: true, message: "income updated 2nd time" });
+        }else if(check.income > 0 && income < check.income){
+            check.income = check.income + income;
+            await check.save();
+            return res.status(200).json({ status: 200, success: true, message: "income updated 2nd time" });
+   
+        }else{
+            return res.status(400).json({status:400,success:false,message:"something went wrong in income controller"})
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).json({ status: 500, success: false, message: 'Internal Server Error.' });
@@ -201,7 +213,12 @@ export const setBudget = async (req, res) => {
         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
 
         if (user.income == 0) {
-            return res.status(400).json({ status: 400, success: false, message: "Initially you should have to provide your Income ." })
+            return res.status(400).json({ status: 400, success: false, message: "now your should set income..." })
+        }else if(budget <= user.income && budget <= (user.income+user.budget)){
+            user.budget = user.budget + budget;
+            user.income = user.income - budget;
+            await user.save();
+            return res.status(200).json({status:200,success:true,message:"budget updated"})
         }
         else if (user.budget == 0 && user.savings == 0) {
             // First time budget setting
@@ -239,19 +256,26 @@ export const setBudget = async (req, res) => {
 
 export const addExpense = async (req, res) => {
     try {
-        const { category, description, amount,date, id } = req.body;
+        const { category, description, amount, date, id } = req.body;
         // return res.send("working")
         console.log(category, description, amount, id, "............../74/")
-        
 
-        if (!category || !description || !amount) {
+
+        if (!description) {
             return res.status(400).json({
                 status: 400,
                 success: false,
-                message: "Category, Description and amount are required."
+                message: "Description is required."
             });
         }
 
+        if (!amount) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "amount is required."
+            });
+        }
         const user = await users.findById(id);
         console.log(user.budget, "userbudget")
         if (!user) {

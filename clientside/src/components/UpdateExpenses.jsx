@@ -57,7 +57,8 @@ console.log(expense,"single_expense")
     }
     return (
         <>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+        <div className="w-screen h-[500px] m-auto flex flex-col justify-center items-center">
+      <form onSubmit={handleSubmit} className="w-80 h-100 m-auto flex flex-col justify-center items-center border border-red-300 bg-white p-6 rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out">
   <div className="mb-4">
     <label htmlFor="category" className="block text-sm font-bold mb-2">Category:</label>
     <input
@@ -82,7 +83,7 @@ console.log(expense,"single_expense")
     />
   </div>
 
-  <div className="mb-4">
+  <div className="mb-4 ">
     <label htmlFor="amount" className="block text-sm font-bold mb-2">Amount:</label>
     <input
       type="number"
@@ -95,13 +96,14 @@ console.log(expense,"single_expense")
   </div>
 
   <input
+  
     type="submit"
     value="Update Expense"
-    className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-600 transition duration-300 ease-in-out"
+    className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-950 transition duration-300 ease-in-out"
   />
 </form>
 
-
+</div>
         </>
     );
 };

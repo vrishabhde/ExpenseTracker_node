@@ -66,7 +66,8 @@ const id = getuserdata?.data?._id
       <p>Loading...</p>
     )}
   </div>
-</>;
+  
+</>
 
         </>
     )

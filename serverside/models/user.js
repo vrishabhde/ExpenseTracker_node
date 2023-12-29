@@ -50,19 +50,20 @@ const userSchema = new Schema({
         type:Boolean,
         default:true
     },
-    expenses:[
-            {
-                description: { type: String, required: true },
-                category: {
-                    type: String,
-                    required: true,
-                    enum: ['Food', 'Transportation', 'Housing', 'Entertainment', 'Other']
-                },
-                amount: { type: Number, required: true },
-                date: { type: Date, default: Date.now },
+    expenses: [
+        {
+            description: { type: String, required: true },
+            category: {
+                type: String,
+                required: true,
+                default: 'Food',
+                enum: ['Transportation','Food','Housing', 'Entertainment', 'Other']
                 
-            }
-        ],
+            },
+            amount: { type: Number, required: true },
+            date: { type: Date, default: Date.now },
+        }
+    ],    
 
     budget:{
         type:Number,

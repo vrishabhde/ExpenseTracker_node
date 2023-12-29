@@ -36,16 +36,16 @@ const Login = () => {
         router("/register")
     }
     return (
-        <div className="flex items-center justify-center h-screen bg-blue-500">
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-center">
-                <h1 className="text-4xl font-bold mb-4 text-blue-500">Sign In</h1>
+        <div className="w-screen h-[600px] flex items-center justify-center bg-stone-400">
+            <div className="bg-slate-900 shadow-md border rounded px-12 pt-8 pb-10 mb-4 text-center">
+                <h1 className="text-4xl text-stone-300 font-bold mb-4">Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                        <label className=" block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="email"
                             placeholder="Enter Your Email"
                             name="email"
@@ -75,7 +75,7 @@ const Login = () => {
                         Login
                     </button>
                     <p className="mt-4 text-sm text-blue-500">
-                        Don't Have an Account? <span onClick={handleclick} className="text-red-500 font-bold cursor-pointer">Sign Up</span>
+                        Don't Have an Account? <span onClick={handleclick} className="text-orange-500 font-bold cursor-pointer">Sign Up</span>
                     </p>
                 </form>
             </div>

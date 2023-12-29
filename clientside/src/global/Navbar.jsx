@@ -37,6 +37,8 @@ const Navbar = () => {
     const gethome = () => {
         router("/")
     }
+
+   
     return (
         <div className="w-100 h-24 bg-gray-800 text-white p-4 flex justify-between items-center">
     <div className="flex items-center">
@@ -53,6 +55,7 @@ const Navbar = () => {
     {getuserdata ? (
         <div className="flex items-center"> {/* Added flex class here */}
             <h1 className="text-xl font-bold mr-2">{getuserdata?.data?.username}</h1>
+           
             <button
                 className="bg-red-500 text-white py-1 px-3 rounded mr-2 mt-1 "
                 onClick={handleclick}
@@ -76,10 +79,10 @@ const Navbar = () => {
         <div>
             {!show && (
                 <button
-                    className="bg-blue-500 text-white py-1 px-3 rounded"
+                    // className="bg-blue-500 text-white py-1 px-3 rounded"
                     onClick={handlelogin}
                 >
-                    Login
+                    
                 </button>
             )}
         </div>

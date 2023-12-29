@@ -5,11 +5,16 @@ import Budget from "./Budget";
 import Income from "./Income";
 import Savings from "./Savings";
 import GetExpenses from "./GetExpenses";
+import Spending from "./Spending";
+import { useNavigate } from "react-router-dom";
 
 const Addexpense = () => {
+  const router = useNavigate();
   const getuserdata = useSelector((state) => state.userReducer.currentUser);
   console.log(getuserdata, "getUserdata")
-  const [expense, setexpense] = useState({ category: "", description: "", amount: 0, date: Date });
+
+
+  const [expense, setexpense] = useState({ category: "Food", description: "", amount: 0, date: Date });
 
   const handlechange = (e) => {
     setexpense({
@@ -49,33 +54,38 @@ console.log(expense,"......................");
     }
   }
 
+
+  const handlesearch = ()=>{
+    router("/sorting")
+  }
   return (
     <>
 
-<div className="flex justify-between border border-gray-200 ">
+<div className="flex justify-between border border-gray-200 bg-stone-200">
   <div className="w-[30%] p-4 border-r transition-all duration-300 ease-in-out">
     <div className="mb-4">
-      <h2 className="text-lg font-bold">List of Your Expenses</h2>
+      {/* <h2 className="text-lg font-bold">List of Your Expenses</h2> */}
       
 
-      {getuserdata ? <GetExpenses /> : <p>Loading...</p>}
+      {getuserdata ? <> <div className="flex justify-between"><h2 className="text-lg font-bold">List of Your Expenses</h2><button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesearch}>search</button></div><GetExpenses /></> : <p>Loading...</p>}
     </div>
   </div>
 
-  <div className="w-[30%] h-auto mt-16  hover:bg-blue-200 p-4 transition-all duration-300 ease-in-out">
+  <div className="w-[30%] h-[85%] mt-16  hover:bg-blue-200 p-4 transition-all duration-300 ease-in-out">
     <div>
       {getuserdata ? (
         <>
           <Income />
           <Budget />
-          <Savings />
+          {/* <Savings /> */}
+          <Spending />
         </>
       ) : (
         <p>Loading...</p>
       )}
     </div>
     </div>
-<div className="group w-[30%] mt-16 h-auto mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
+<div className="group w-[30%] mt-16 h-[85%] mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
     <form onSubmit={handlesubmit} className="mt-4">
       <h2 className="text-lg font-bold mb-4">Add Expense</h2>
 
@@ -145,3 +155,5 @@ console.log(expense,"......................");
 };
 
 export default Addexpense;
+
+

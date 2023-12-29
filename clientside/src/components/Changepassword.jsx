@@ -40,16 +40,16 @@ const Changepassword = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+        <div className="max-w-md mx-auto border border-red-300 mt-20 bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-bold mb-4">{currentUser?.data?.username}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
       
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-sm font-bold mb-2">Old Password:</label>
+            <label htmlFor="password" className="text-sm font-bold mb-2">Current Password:</label>
             <input
               type="password"
               id="password"
-              placeholder='Enter your previous password'
+              placeholder='Enter your current password'
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -85,8 +85,8 @@ const Changepassword = () => {
       
           <input
             type="submit"
-            value="Submit Changed Password"
-            className="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer"
+            value="Changed Password"
+            className="bg-blue-500 hover:bg-blue-950 text-white py-2 px-4 rounded cursor-pointer"
           />
       
         </form>
