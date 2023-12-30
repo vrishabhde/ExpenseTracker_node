@@ -41,21 +41,23 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-100 h-24 bg-gray-800 text-white p-4 flex justify-between items-center">
+    <div className="w-100 h-28 bg-gray-800 text-white p-4 flex justify-between items-center">
       <div className="flex items-center">
         <p className="text-lg font-bold mr-4">
           <img
             onClick={gethome}
             src='https://play-lh.googleusercontent.com/dz5ylSXhBNhz5jtcE653shoFInNcdG2iPNxUFiz3vaftjpJBLWUkW9_FaelhTgWd3sE=w600-h300-pc0xffffff-pd'
             alt="Expense Tracker"
-            className="mb-4 rounded shadow-lg w-48 h-20 mt-6"
+            className="mb-4 rounded shadow-lg w-60 h-24 mt-6"
           />
         </p>
-        <p className='m-auto font-extrabold -ml-10 text-2xl text-slate-300'> RapidQube-Transforming Business Paradigms</p>
+        {/* <p className='m-auto font-extrabold -ml-10 text-2xl text-slate-300'> Track Your Expenses</p> */}
       </div>
       {getuserdata ? (
         <div className="relative group">
           <div className="flex items-center">
+          <p className=' font-extrabold text-2xl text-slate-300 mr-96'> RapidQube-Transforming Business Paradigms</p>
+
             <h1 className="text-xl text-gray-300 font-bold mr-2">{getuserdata?.data?.username}</h1>
 
             <button
@@ -96,14 +98,17 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <div>
-          {!showDropdown && (
+        <div className='flex w-[78%]'>
+          {!showDropdown && (<>
+                    <p className='m-auto font-extrabold -ml-10 text-3xl text-slate-300'> Track Your Expenses</p>
+
             <button
               className="bg-blue-500 text-white font-semibold py-1 px-3 rounded hover:bg-stone-950"
               onClick={handleregister}
             >
               Signup
             </button>
+            </>
           )}
         </div>
       )}
