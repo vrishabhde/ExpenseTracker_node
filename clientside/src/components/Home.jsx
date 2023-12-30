@@ -24,7 +24,7 @@ const Home = () => {
       <>
       <h1 className="bg-stone-200 flex items-center justify-center text-4xl font-bold ">Welcome To</h1>
       <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Tracker Management System ...!</h2>
-    
+      <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
         <div className="w-100 flex items-center justify-center h-[550px] bg-stone-200">
   
 
@@ -49,12 +49,14 @@ const Home = () => {
     </>
   ) : (
     <>
+    
      <img
   src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmYba2MCZi3SkXcAk2Hp_CcCe5NJ-becrVhg&usqp=CAU'
     // src="https://repository-images.githubusercontent.com/419507496/cfcc1354-86ac-432e-823a-da56c21302ba" 
     alt="Expense Tracker"
     className="mb-2 rounded shadow-lg w-full lg:w-2/3 xl:w-1/2"
   />
+ 
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded mt-4  hover:bg-blue-950"
         onClick={handlelogin}
