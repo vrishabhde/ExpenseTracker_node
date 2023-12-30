@@ -23,7 +23,7 @@ export const registration = async (req, res) => {
 
         await newUser.save();
 
-        return res.status(201).json({ status: 201, success: true, message: "You Have Registered Successfully." });
+        return res.status(201).json({ status: 201, success: true, message: "Signup Successfully." });
     } catch (error) {
         return res.status(500).json({ status: 500, success: false, message: "Internal Server Error Occured in controller." });
     }
@@ -218,7 +218,7 @@ export const setBudget = async (req, res) => {
             user.budget = user.budget + budget;
             user.income = user.income - budget;
             await user.save();
-            return res.status(200).json({status:200,success:true,message:"budget updated"})
+            return res.status(200).json({status:200,success:true,message:"budget updated Successfully"})
         }
         else if (user.budget == 0 && user.savings == 0) {
             // First time budget setting

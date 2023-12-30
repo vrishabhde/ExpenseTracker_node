@@ -11,7 +11,8 @@ const SortAndFilterExpenses = () => {
 
   const [sortedExpenses, setSortedExpenses] = useState([...reduxdata]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [searchDate, setSearchDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -35,12 +36,15 @@ const SortAndFilterExpenses = () => {
   };
 
   const handleSearchByDate = () => {
-    if (searchDate === '') {
+    if (startDate === '' && endDate === '') {
       setSortedExpenses([...reduxdata]);
     } else {
-      const filteredExpenses = reduxdata.filter(
-        (expense) => new Date(expense.date).toLocaleDateString() === new Date(searchDate).toLocaleDateString()
-      );
+      const filteredExpenses = reduxdata.filter((expense) => {
+        const expenseDate = new Date(expense.date);
+        const start = startDate === '' || new Date(startDate) <= expenseDate;
+        const end = endDate === '' || new Date(endDate) >= expenseDate;
+        return start && end;
+      });
       setSortedExpenses(filteredExpenses);
     }
   };
@@ -84,55 +88,60 @@ const SortAndFilterExpenses = () => {
 
   const handlemore = () => {
     router("/addexpense")
-  }
+  };
 
   return (
     <>
-      {/* <h1>Sorting and Filtering Expenses</h1> */}
       <div className='w-[100%] h-16 flex items-center justify-between mb-8 bg-stone-200 border'>
         <div>
-        <label htmlFor="category"></label>
-        <select
-          id="category"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Food">Food</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Housing">Housing</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Other">Other</option>
-        </select>
-        <button className='ml-5 w-40 h-10 rounded-md border bg-slate-600 text-white' onClick={handleFilterByCategory}>Filter by Category</button>
+          <label htmlFor="category"></label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Housing">Housing</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+          </select>
+          <button className='ml-5 w-36 h-10 rounded-md border bg-slate-600 text-white' onClick={handleFilterByCategory}>Filter by Category</button>
         </div>
         <div>
-        <label htmlFor="date">Enter Date:</label>
-        <input
-          type="date"
-          id="date"
-          value={searchDate}
-          onChange={(e) => setSearchDate(e.target.value)}
-        />
-        <button className='ml-5 w-40 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSearchByDate}>Search by Date</button>
+          <label htmlFor="startDate">Start Date:</label>
+          <input
+            type="date"
+            id="startDate"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <label htmlFor="endDate">End Date:</label>
+          <input
+            type="date"
+            id="endDate"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+          <button className='ml-5 min-w-32 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSearchByDate}>Search by Date</button>
         </div>
         <div>
-        <input
-          type="text"
-          placeholder="Search expenses..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            handleSearch(); // Call the search function on every keystroke
-          }}
-        />
-        <button className='ml-5 w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSort}>Search</button>
+          <input
+            type="text"
+            placeholder="Search expenses..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              handleSearch();
+            }}
+          />
+          <button className='ml-5 w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSort}>Search</button>
         </div>
-       
-      </div >
-      <div className='flex items-center justify-end'>  
-              <button className='flex items-center w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handlemore}>Add More</button>
-</div>
+      </div>
+      <div className='flex items-center justify-end'>
+        <button className='flex items-center w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handlemore}>Add More</button>
+      </div>
       <div>
         {reduxdata ? (
           sortedExpenses?.map((expense, index) => (
@@ -169,7 +178,7 @@ const SortAndFilterExpenses = () => {
             </div>
           ))
         ) : (
-          <p>You Expense List is Empty...</p>
+          <p>Your Expense List is Empty...</p>
         )}
       </div>
     </>

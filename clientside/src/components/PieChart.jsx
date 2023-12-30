@@ -8,7 +8,6 @@ const PieChartExample = () => {
 
   let categoryAndAmount = [];
   if (expenseArray) {
-    // Combine entries with the same category and sum their amounts
     const categoryMap = new Map();
     expenseArray.forEach((item) => {
       const category = item.category;
@@ -19,7 +18,6 @@ const PieChartExample = () => {
       }
     });
 
-    // Convert the map back to an array of objects
     categoryAndAmount = Array.from(categoryMap, ([category, amount]) => ({
       category,
       amount,
@@ -37,8 +35,9 @@ const PieChartExample = () => {
       <text
         x={x}
         y={y}
-        fill="#8884d8"
         fontSize={12}
+        fontWeight="bold"
+        fill="#000000" // Black color
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
@@ -48,8 +47,8 @@ const PieChartExample = () => {
   };
 
   return (
-    <div>
-      <h2 className='flex items-center justify-center font-bold text-2xl'>Category Summary</h2>
+    <div className='flex flex-col -mt-28 w-[100%] h-[330px] border'>
+      <h2 className='flex  items-center justify-center font-bold text-2xl'>Category Summary</h2>
       <PieChart width={400} height={400}>
         <Pie
           data={categoryAndAmount}
@@ -60,11 +59,9 @@ const PieChartExample = () => {
           fill="#8884d8"
           labelLine={false}
           label={renderCustomizedLabel}
-
-          
         >
           {categoryAndAmount.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-rs${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Legend />

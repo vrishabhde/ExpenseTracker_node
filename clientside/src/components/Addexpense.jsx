@@ -77,7 +77,7 @@ console.log(expense,"......................");
         <>
           <Income />
           <Budget />
-          {/* <Savings /> */}
+          <Savings />
           <Spending />
         </>
       ) : (
