@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <h1 className="bg-stone-200 flex items-center justify-center text-4xl font-bold ">Welcome To</h1>
-      <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Tracker Management System ...!</h2>
+      <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Management System ...!</h2>
       <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
       <div className="w-[100%] h-[500px] m-auto flex border items-center justify-center bg-stone-200">
 
@@ -47,7 +47,7 @@ const Home = () => {
               // src='https://assets.gqindia.com/photos/608c135f6e6a489a62cd254d/master/pass/Apps%20for%20finance%20management.jpg'
               src="https://www.drupal.org/files/project-images/expense-income.png" 
               alt="Expense Tracker"
-              className="w-[300px] h-[55%] mb-24 mt-6 rounded shadow-lg lg:w-1/3 xl:w-1/3"
+              className="w-[300px] h-[45%] mb-24 mt-6 rounded shadow-lg lg:w-1/3 xl:w-1/3"
             />
 
           </div>

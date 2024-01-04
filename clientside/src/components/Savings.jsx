@@ -1,18 +1,61 @@
-
+import React from "react";
 import { useSelector } from "react-redux";
 
 const Savings = () => {
-    const getuserdata = useSelector((state) => state.userReducer.currentUser);
-    console.log(getuserdata,"getuserdatata")
-  
-    
-    return (
-        <>
-       <div className="group w-[70%] h-16 mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
-        <p className=" text-xl font-bold"> Balance : ₹ {getuserdata?.data?.savings}</p>
+  const getuserdata = useSelector((state) => state.userReducer.currentUser);
+
+  const expenseArray = getuserdata?.data?.expenses || [];
+
+  const totalExpenses = expenseArray?.reduce((acc, expense) => acc + expense.amount, 0);
+  const averageExpense = totalExpenses / (expenseArray?.length || 1);
+
+  const highestExpense = expenseArray.length > 0 ? Math.max(...expenseArray.map((expense) => expense.amount)) : 0;
+  const lowestExpense = expenseArray.length > 0 ? Math.min(...expenseArray.map((expense) => expense.amount)) : 0;
+
+  return (
+    <div className="w-screen h-[600px] border flex flex-col justify-center items-center">
+    <p className="font-semibold text-2xl mb-10">Expense Summary</p>
+      <div className="w-[40%] h-[450px] border">
+
+        <table className=" flex flex-col justify-evenly">
+          <thead >
+            <tr className="mt-1 flex justify-around">
+              <th className="text-blue-600">Total Expenses</th>
+              <th className="text-yellow-600">Average Expense</th>
+              <th className="text-red-600">Highest Expense</th>
+              <th className="text-green-600">Lowest Expense</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="flex justify-between">
+              <td className="w-[25%] flex justify-center  bg-blue-400 text-base font-semibold">₹ {totalExpenses}</td>
+              <td className="w-[25%] flex justify-center  bg-yellow-400 text-base font-semibold">₹ {averageExpense.toFixed(2)}</td>
+              <td className="w-[25%] flex justify-center  bg-red-500 text-base font-semibold">₹ {highestExpense}</td>
+              <td className="w-[25%] flex justify-center  bg-green-500 text-base font-semibold">₹ {lowestExpense}</td>
+            </tr>
+          </tbody>
+        </table>
+
         
-        </div>
-        </>
-    )
-}
+        <table className="w-[100%] flex flex-col justify-evenly items-center border ">
+          <thead className="w-[50%]  mt-4 flex items-center border ">
+            <tr className="w-[100%] flex justify-evenly">
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody className="w-[50%]  mt-4 flex flex-col items-center border ">
+            {expenseArray.map((expense) => (
+              <tr className="w-[65%] border flex justify-between" key={expense.id}>
+                <td className=" border border-red-100 ">{expense.category}</td>
+                <td className=" border border-red-100 ">₹ {expense.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
 export default Savings;

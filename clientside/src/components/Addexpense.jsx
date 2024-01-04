@@ -58,26 +58,32 @@ console.log(expense,"......................");
   const handlesearch = ()=>{
     router("/sorting")
   }
+
+  const handlesummary = () => {
+    router("/saving")
+  }
   return (
     <>
 
-<div className="flex justify-between border border-gray-200 bg-stone-200">
+<div className="w-screen h-[600px] flex justify-between border border-gray-200 bg-stone-200">
   <div className="w-[30%] p-4 border-r transition-all duration-300 ease-in-out">
     <div className="mb-4">
       {/* <h2 className="text-lg font-bold">List of Your Expenses</h2> */}
       
 
-      {getuserdata ? <> <div className="flex justify-between"><h2 className="text-lg font-bold">List of Your Expenses</h2><button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesearch}>search</button></div><GetExpenses /></> : <p>Loading...</p>}
+      {getuserdata ? <> <div className="flex justify-between"><h2 className="text-lg font-bold">List of Your Expenses</h2><button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesearch}>search</button>
+      <button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesummary}>Summary</button>
+      </div><GetExpenses /></> : <p>Loading...</p>}
     </div>
   </div>
 
-  <div className="w-[30%] h-[85%] mt-16  hover:bg-blue-200 p-4 transition-all duration-300 ease-in-out">
+  <div className="w-[30%] h-[60%] mt-16  hover:bg-blue-200 p-4 transition-all duration-300 ease-in-out">
     <div>
       {getuserdata ? (
         <>
           <Income />
           <Budget />
-          <Savings />
+          {/* <Savings /> */}
           <Spending />
         </>
       ) : (
@@ -85,7 +91,7 @@ console.log(expense,"......................");
       )}
     </div>
     </div>
-<div className="group w-[30%] mt-16 h-[85%] mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
+<div className="group w-[30%] mt-16 h-[80%] mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out ">
     <form onSubmit={handlesubmit} className="mt-4">
       <h2 className="text-lg font-bold mb-4">Add Expense</h2>
 

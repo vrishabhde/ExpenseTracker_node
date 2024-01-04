@@ -16,7 +16,7 @@ export const authRegister = async(req,res,next) => {
         if(!confirmpassword) return res.status(404).json({status: 404, success: false, message: "Confirm Password is required."});        
         if(!countryCode) return res.status(404).json({status: 404, success: false, message: "Country Code is required."});        
         if(!contact) return res.status(404).json({status: 404, success: false, message: "Contact Number is required."});
-        if(contact.length != 10) return res.status(404).json({status: 404, success: false, message: "Contact Number should have 10 digits."});
+        if(contact.length != 10) return res.status(404).json({status: 404, success: false, message: "Contact Number must be of 10 digits only."});
             
         if(password !== confirmpassword) return res.status(500).json({status: 400, success: false, message: "Credentials not matched."});
 

@@ -20,7 +20,7 @@ const id = getuserdata?.data?._id
             try {
                 const response=await axios.post(`http://localhost:8000/api/deleteExpense`,{expense_id,id});
                 if(response?.data?.success){
-                   window.confirm('Are you sure you want to delete this expense?');
+                   window.confirm('Are you sure want to delete this expense?');
                     window.location.reload();
                 }
             } catch (error) {

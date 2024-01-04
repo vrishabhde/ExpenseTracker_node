@@ -213,7 +213,7 @@ export const setBudget = async (req, res) => {
         if (!user) return res.status(404).json({ status: 404, success: false, message: 'User not found.' });
 
         if (user.income == 0) {
-            return res.status(400).json({ status: 400, success: false, message: "now your should set income..." })
+            return res.status(400).json({ status: 400, success: false, message: " please set income value..." })
         }else if(budget <= user.income && budget <= (user.income+user.budget)){
             user.budget = user.budget + budget;
             user.income = user.income - budget;

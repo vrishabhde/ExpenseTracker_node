@@ -40,7 +40,7 @@ const Income = () => {
         // </>
         <>
            <div className="group w-[100%] h-32 mb-2 flex flex-col items-left p-4 rounded  hover:bg-blue-200 ease-in-out">
-                <h1 className="text-xl font-bold ">Your Income</h1>
+                <h1 className="text-xl font-bold ">Your Wallet</h1>
                 <p className="mb-2 text-xl font-bold ">₹ {getuserdata?.data?.income}</p>
 
                 <form onSubmit={handlesubmit} className="mb-8">
