@@ -19,21 +19,37 @@ const Home = () => {
     router("/addexpense");
     setShow(true);
   };
-
+// const alternateImage = 'https://c8.alamy.com/comp/G5M409/expenses-concept-with-pie-chart-3d-rendering-isolated-on-white-background-G5M409.jpg';
   return (
     <>
-      <h1 className="bg-stone-200 flex items-center justify-center text-4xl font-bold ">Welcome To</h1>
+    {getuserdata && getuserdata?.data?.expenses.length !== 0 ? 
+    <>
+      <div>
+      
+      <h1 className="bg-stone-200 flex items-center justify-center text-3xl font-bold ">Welcome Back {getuserdata?.data?.firstname}...!</h1>
+      <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Management System</h2>
+      <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
+      </div>
+      
+    </> : 
+    <> 
+      
+      <div>
+      <h1 className="bg-stone-200 flex items-center justify-center text-3xl font-bold ">Welcome To</h1>
       <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Management System ...!</h2>
       <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
-      <div className="w-[100%] h-[500px] m-auto flex border items-center justify-center bg-stone-200">
-
+      </div>
+      
+    </>
+    }
+    
+          <div className="w-[100%] h-[500px] m-auto flex border items-center justify-center bg-stone-200">
 
         {getuserdata ? (
           <><div className="w-screen h-screen flex items-center justify-around">
             <div>
               <div>
-                <PieChartExample />
-
+               {getuserdata?.data?.expenses.length == 0 ? <><img className='w-96 h-80 mb-16 ml-10 border border-red-200' src="/expenseEmpty.jpg" /> </> : <><PieChartExample /></>} 
               </div>
 
             </div>

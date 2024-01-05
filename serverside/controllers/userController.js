@@ -78,16 +78,14 @@ export const updateuser = async (req, res) => {
             return res.status(400).json({ success: false, status: 400, message: "id is required" });
         }
 
-        // Check if the email or contact already exists in the database for other users
         const existingEmail = await users.findOne({
             $and: [
-                { _id: { $ne: id } }, // Exclude the current user
+                { _id: { $ne: id } }, 
                 { $or: [{ email }] }
             ]
         }).exec();
 
         if (existingEmail) {
-            // Either email or contact is already taken
             return res.status(409).json({ success: false, status: 409, message: "Email already exists, please try with another Email..!" });
         }
 
@@ -99,8 +97,7 @@ export const updateuser = async (req, res) => {
         }).exec();
 
         if (existingContact) {
-            // Either email or contact is already taken
-            return res.status(409).json({ success: false, status: 409, message: "contact is already used" });
+            return res.status(409).json({ success: false, status: 409, message: "This contact number is already in used" });
         }
 
         try {
@@ -125,7 +122,7 @@ export const changePassword = async (req, res) => {
         const { id } = req.params;
         const { password, newPassword, confirmNewPassword } = req.body;
 
-        if (!password) return res.status(400).json({ status: 400, success: false, message: "Old Password is required." });
+        if (!password) return res.status(400).json({ status: 400, success: false, message: "Current Password is required." });
 
         if (!newPassword) return res.status(400).json({ status: 400, success: false, message: "New Password is required." });
 
@@ -137,7 +134,7 @@ export const changePassword = async (req, res) => {
 
         const checkPassword = await bcrypt.compare(password, user.password);
 
-        if (!checkPassword) return res.status(400).json({ status: 400, success: false, message: "Incorrect old password." });
+        if (!checkPassword) return res.status(400).json({ status: 400, success: false, message: "Incorrect current password." });
 
 
         try {
@@ -149,7 +146,7 @@ export const changePassword = async (req, res) => {
 
         if (newPassword == password) return res.status(400).json({ status: 400, success: false, message: "current password & new password should not be same." })
         if (newPassword !== confirmNewPassword) {
-            return res.status(400).json({ status: 400, success: false, message: "New password and confirm new password must be identical." });
+            return res.status(400).json({ status: 400, success: false, message: "New password and confirm password must be identical." });
         }
 
 
@@ -214,7 +211,10 @@ export const setBudget = async (req, res) => {
 
         if (user.income == 0) {
             return res.status(400).json({ status: 400, success: false, message: " please set income value..." })
-        }else if(budget <= user.income && budget <= (user.income+user.budget)){
+        }else if(budget > user.income){
+            return res.status(400).json({status:400,success:false,message:"budget exceeds income"})
+        }
+        else if(budget <= user.income && budget <= (user.income+user.budget)){
             user.budget = user.budget + budget;
             user.income = user.income - budget;
             await user.save();
@@ -253,31 +253,15 @@ export const setBudget = async (req, res) => {
 };
 
 
-
 export const addExpense = async (req, res) => {
     try {
         const { category, description, amount, date, id } = req.body;
-        // return res.send("working")
-        console.log(category, description, amount, id, "............../74/")
 
+        // Parse the date and format it as "dd Mon yyyy" or use the current date if not provided
+        const formattedDate = date ? formatDates(new Date(date)) : formatDate(new Date());
 
-        if (!description) {
-            return res.status(400).json({
-                status: 400,
-                success: false,
-                message: "Description is required."
-            });
-        }
-
-        if (!amount) {
-            return res.status(400).json({
-                status: 400,
-                success: false,
-                message: "amount is required."
-            });
-        }
         const user = await users.findById(id);
-        console.log(user.budget, "userbudget")
+
         if (!user) {
             return res.status(404).json({
                 status: 404,
@@ -297,12 +281,9 @@ export const addExpense = async (req, res) => {
             });
         }
 
-        // Add the expense to the user's expenses array
-        user.expenses.push({ category, description, amount: expenseAmount, date });
-        // Update the user's budget
+        user.expenses.push({ category, description, amount: expenseAmount, date: formattedDate });
         user.budget -= expenseAmount;
 
-        // Save the updated user document
         await user.save();
 
         return res.status(201).json({
@@ -320,22 +301,71 @@ export const addExpense = async (req, res) => {
     }
 };
 
+// Custom function to format the date as dd Mon yyyy
+function formatDates(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+}
+
+
+
+
+// export const getExpenses = async (req, res) => {
+//     try {
+//         const { id } = req.body;
+//         const checkuser = await users.findById(id).exec();
+//         if (!checkuser) return res.status(400).json({ status: 400, success: false, message: "user not found" });
+
+//         return res.status(200).json({ status: 200, success: true, expensesList: checkuser.expenses })
+//     } catch (error) {
+//         return res.status(500).json({
+//             status: 500,
+//             success: false,
+//             message: "Internal Server Error."
+//         });
+//     }
+// }
+
 
 export const getExpenses = async (req, res) => {
     try {
         const { id } = req.body;
         const checkuser = await users.findById(id).exec();
-        if (!checkuser) return res.status(400).json({ status: 400, success: false, message: "user not found" });
 
-        return res.status(200).json({ status: 200, success: true, expensesList: checkuser.expenses })
+        if (!checkuser) {
+            return res.status(400).json({ status: 400, success: false, message: "user not found" });
+        }
+
+        // Format the dates in the expenses array
+        const formattedExpenses = checkuser.expenses.map(expense => ({
+            ...expense.toObject(),
+            date: formatDate(new Date(expense.date)),
+        }));
+
+        return res.status(200).json({ status: 200, success: true, expensesList: formattedExpenses });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             status: 500,
             success: false,
             message: "Internal Server Error."
         });
     }
+};
+
+// Custom function to format the date as dd Mon yyyy
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
 }
+
+
 
 
 export const updateExpenses = async (req, res) => {
@@ -364,7 +394,7 @@ export const updateExpenses = async (req, res) => {
 
             } else if (amount > updateExpense.amount) {
                 user.budget = user.budget - (amount - updateExpense.amount)
-                if (user.budget < 0) return res.status(400).json({ status: 400, success: false, message: "something went wrong regarding amount" })
+                if (user.budget < 0) return res.status(400).json({ status: 400, success: false, message: "Expense amount exceeds your budget." })
                 updateExpense.amount = amount;
                 await user.save();
                 return res.status(200).json({ status: 200, success: true, message: "expense updateddd successfully" })

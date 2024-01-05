@@ -71,12 +71,20 @@ console.log(expense,"......................");
       {/* <h2 className="text-lg font-bold">List of Your Expenses</h2> */}
       
 
-      {getuserdata ? <> <div className="flex justify-between"><h2 className="text-lg font-bold">List of Your Expenses</h2><button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesearch}>search</button>
+      {getuserdata?.data?.expenses.length !== 0  ?
+       <>
+       <div className="flex justify-between">
+        <h2 className="text-lg font-bold">List of Your Expenses</h2>
+        <button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesearch}>search</button>
       <button className="border w-20 rounded-md bg-slate-600 text-white pb-1" onClick={handlesummary}>Summary</button>
-      </div><GetExpenses /></> : <p>Loading...</p>}
+      </div>
+       <div><GetExpenses /></div>
+      </> :
+      <p  className="text-2xl text-red-600 ml-14 mt-52 font-bold">Your list is empty<br/>Add Your expenses... </p>
+       }
     </div>
   </div>
-
+   
   <div className="w-[30%] h-[60%] mt-16  hover:bg-blue-200 p-4 transition-all duration-300 ease-in-out">
     <div>
       {getuserdata ? (

@@ -20,18 +20,18 @@ const Savings = () => {
         <table className=" flex flex-col justify-evenly">
           <thead >
             <tr className="mt-1 flex justify-around">
-              <th className="text-blue-600">Total Expenses</th>
+              <th className="text-blue-600 ml-2">Total Expenses</th>
+              <th className="text-green-600 ml-3">Lowest Expense</th>
               <th className="text-yellow-600">Average Expense</th>
               <th className="text-red-600">Highest Expense</th>
-              <th className="text-green-600">Lowest Expense</th>
             </tr>
           </thead>
           <tbody>
             <tr className="flex justify-between">
               <td className="w-[25%] flex justify-center  bg-blue-400 text-base font-semibold">₹ {totalExpenses}</td>
+              <td className="w-[25%] flex justify-center  bg-green-500 text-base font-semibold">₹ {lowestExpense}</td>
               <td className="w-[25%] flex justify-center  bg-yellow-400 text-base font-semibold">₹ {averageExpense.toFixed(2)}</td>
               <td className="w-[25%] flex justify-center  bg-red-500 text-base font-semibold">₹ {highestExpense}</td>
-              <td className="w-[25%] flex justify-center  bg-green-500 text-base font-semibold">₹ {lowestExpense}</td>
             </tr>
           </tbody>
         </table>

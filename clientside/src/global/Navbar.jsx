@@ -31,7 +31,7 @@ const Navbar = () => {
 
   const handleclick = () => {
     localStorage.removeItem("token");
-    alert("Logout success");
+    alert("Logout Successfully");
     router("/");
     window.location.reload();
   };
@@ -56,7 +56,7 @@ const Navbar = () => {
       {getuserdata ? (
         <div className="relative group">
           <div className="flex items-center">
-          <p className=' font-extrabold text-2xl text-slate-300 mr-72'> R Track-Expenditure Monitoring Solution</p>
+          <p className='w-[850px] font-extrabold text-2xl text-slate-300 mr-[30%]'> R Track-Expenditure Monitoring Solution</p>
 
             <h1 className="text-xl text-gray-300 font-bold mr-2">{getuserdata?.data?.username}</h1>
 
@@ -69,14 +69,7 @@ const Navbar = () => {
 
             {showDropdown && (
               <div className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-md">
-                <button
-                  onClick={() => {
-                    handleclick();
-                  }}
-                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
-                >
-                  Logout
-                </button>
+               
                 <button
                   onClick={() => {
                     navigateUpdateuser();
@@ -92,6 +85,14 @@ const Navbar = () => {
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
                 >
                   Change Password
+                </button>
+                <button
+                  onClick={() => {
+                    handleclick();
+                  }}
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                >
+                  Logout
                 </button>
               </div>
             )}
