@@ -97,6 +97,7 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
   return (
     <>
       <div className='w-[100%] h-16 flex items-center justify-between mb-8 bg-stone-200 border'>
+        
         <div>
           <label htmlFor="category"></label>
           <select
@@ -113,6 +114,9 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
           </select>
           <button className='ml-5 w-36 h-10 rounded-md border bg-slate-600 text-white' onClick={handleFilterByCategory}>Filter by Category</button>
         </div>
+        
+       
+        
         <div>
           <label htmlFor="startDate">Start Date:</label>
           <input
@@ -147,7 +151,9 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
         <button className='flex items-center w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handlemore}>Add More</button>
       </div>
       <div>
-        {reduxdata ? (
+        {sortedExpenses.length !== 0 ?
+         <>
+           {reduxdata ? (
           sortedExpenses?.map((expense, index) => (
             <div
               className="group w-[40%] h-40 m-auto mb-4 border border-red-300 flex flex-col items-left p-2 rounded shadow-slate-700 hover:bg-stone-200 ease-in-out"
@@ -184,6 +190,11 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
         ) : (
           <p>Your Expense List is Empty...</p>
         )}
+         </> : 
+         <>
+         <p className='ml-[36%] mt-[10%] font-semibold text-2xl'>Sorry, no results found for your search...!</p>
+         </>}
+      
       </div>
     </>
   );

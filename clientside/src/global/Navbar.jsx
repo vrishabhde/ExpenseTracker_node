@@ -56,7 +56,7 @@ const Navbar = () => {
       {getuserdata ? (
         <div className="relative group">
           <div className="flex items-center">
-          <p className='w-[850px] font-extrabold text-2xl text-slate-300 mr-[30%]'> R Track-Expenditure Monitoring Solution</p>
+          <p className='w-[770px] font-extrabold text-2xl text-slate-300'> R Track-Expenditure Monitoring Solution</p>
 
             <h1 className="text-xl text-gray-300 font-bold mr-2">{getuserdata?.data?.username}</h1>
 

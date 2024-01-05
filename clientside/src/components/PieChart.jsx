@@ -61,7 +61,7 @@ const PieChartExample = () => {
           label={renderCustomizedLabel}
         >
           {categoryAndAmount.map((entry, index) => (
-            <Cell key={`cell-rs${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Legend />

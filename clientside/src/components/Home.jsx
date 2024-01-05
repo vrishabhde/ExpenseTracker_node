@@ -49,7 +49,7 @@ const Home = () => {
           <><div className="w-screen h-screen flex items-center justify-around">
             <div>
               <div>
-               {getuserdata?.data?.expenses.length == 0 ? <><img className='w-96 h-80 mb-16 ml-10 border border-red-200' src="/expenseEmpty.jpg" /> </> : <><PieChartExample /></>} 
+               {getuserdata?.data?.expenses.length == 0 ? <><img className='w-96 h-80 mb-20 ml-10 border border-red-200' src="/expenseEmpty.jpg" /> </> : <><PieChartExample /></>} 
               </div>
 
             </div>
