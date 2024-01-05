@@ -29,11 +29,15 @@ const SortAndFilterExpenses = () => {
   const handleFilterByCategory = () => {
     if (selectedCategory === '') {
       setSortedExpenses([...reduxdata]);
-    } else {
+    }
+     else {
       const filteredExpenses = reduxdata.filter((expense) => expense.category === selectedCategory);
-      setSortedExpenses(filteredExpenses);
+      if(filteredExpenses){
+        setSortedExpenses(filteredExpenses);
+      }
     }
   };
+console.log(sortedExpenses.length,"handleFilterByCategory");
 
   const handleSearchByDate = () => {
     if (startDate === '' && endDate === '') {
