@@ -41,7 +41,8 @@ const PieChartExample = () => {
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
-        {categoryAndAmount[index].category}
+        {categoryAndAmount[index].category}: r 
+       {categoryAndAmount[index].amount} 
       </text>
     );
   };
