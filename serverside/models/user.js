@@ -14,7 +14,7 @@ const expenseSchema = new Schema({
     category: {
         type: String,
         required: true,
-        default: 'Food',
+        // default: 'Food',
         enum: ['Transportation', 'Food', 'Housing', 'Entertainment', 'Other']
     },
     amount: { type: Number, required: true },
@@ -28,17 +28,18 @@ const userSchema = new Schema({
     firstname: {
         type: String,
         required: true,
-        set: (value) => value.charAt(0).toUpperCase() + value.slice(1) // Convert first letter to uppercase
+        set: (value) => value.charAt(0).toUpperCase() + value.slice(1)
     },
     lastname: {
         type: String,
         required: true,
-        set: (value) => value.charAt(0).toUpperCase() + value.slice(1) // Convert first letter to uppercase
+        set: (value) => value.charAt(0).toUpperCase() + value.slice(1) 
     },
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        set: (value) => value.charAt(0).toUpperCase() + value.slice(1)
     },
     email: {
         type: String,
@@ -60,11 +61,22 @@ const userSchema = new Schema({
             message: props => `${props.value} is not a valid phone number!`
         }
     },
-    countryCode: {
-        type: String,
-        required: true,
-        enum: ["+91", "+92"]
-    },
+    country: {
+        type: {
+            code: {
+                type: String,
+                required: true,
+                enum: ["+91", "+92", "+93", "+94", "+95", "+96", "+97", "+98", "+99"] // Add more country codes as needed
+            },
+            name: {
+                type: String,
+                required: true,
+                enum: ["India", "Pakistan", "Country3", "Country4", "Country5", "Country6", "Country7", "Country8", "Country9"] // Add corresponding country names
+            }
+        },
+        required: true
+    }
+    ,
     isadmin: {
         type: Boolean,
         default: false

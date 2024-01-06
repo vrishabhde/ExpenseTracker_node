@@ -41,7 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-100 h-28 bg-gray-800 text-white p-4 flex justify-between items-center">
+    <div className="fixed top-0 left-0 w-full h-28 bg-gray-800 text-white p-4 flex justify-between items-center z-50">
       <div className="flex items-center">
         <p className="text-lg font-bold mr-4">
           <img

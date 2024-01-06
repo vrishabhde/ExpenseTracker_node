@@ -40,7 +40,7 @@ const Changepassword = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto border border-red-300 mt-20 bg-white p-6 rounded-md shadow-md">
+        <div className=" max-w-md mx-auto border border-red-300 mt-44 bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-bold mb-4">{currentUser?.data?.username}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
       

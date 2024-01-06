@@ -36,7 +36,7 @@ const Login = () => {
         router("/register")
     }
     return (
-        <div className="w-screen h-[600px] flex items-center justify-center bg-stone-400">
+        <div className=" mt-28 w-screen h-[620px] flex items-center justify-center bg-stone-400">
             <div className="bg-slate-900 shadow-md border rounded px-12 pt-8 pb-10 mb-4 text-center">
                 <h1 className="text-4xl text-stone-300 font-bold mb-4">Sign In</h1>
                 <form onSubmit={handleSubmit}>

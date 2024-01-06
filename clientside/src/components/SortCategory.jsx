@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const SortAndFilterExpenses = () => {
   const router = useNavigate();
   const getuserdata = useSelector((state) => state.userReducer.currentUser);
-  const reduxdata = getuserdata?.data?.expenses || []; // Ensure reduxdata is an array, even if undefined
+  const reduxdata = getuserdata?.data?.expenses || [];
   const id = getuserdata?.data?._id;
 
   const [sortedExpenses, setSortedExpenses] = useState([...reduxdata]);
@@ -29,15 +29,11 @@ const SortAndFilterExpenses = () => {
   const handleFilterByCategory = () => {
     if (selectedCategory === '') {
       setSortedExpenses([...reduxdata]);
-    }
-     else {
+    } else {
       const filteredExpenses = reduxdata.filter((expense) => expense.category === selectedCategory);
-      if(filteredExpenses){
-        setSortedExpenses(filteredExpenses);
-      }
+      setSortedExpenses(filteredExpenses);
     }
   };
-console.log(sortedExpenses.length,"handleFilterByCategory");
 
   const handleSearchByDate = () => {
     if (startDate === '' && endDate === '') {
@@ -67,12 +63,10 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
   };
 
   const handleUpdate = (expense_id) => {
-    console.log(expense_id, 'idddd');
     router(`/updateExpense/${expense_id}`);
   };
 
   const handleDelete = async (expense_id) => {
-    console.log(expense_id, 'idddd');
     try {
       const response = await axios.post('http://localhost:8000/api/deleteExpense', {
         expense_id,
@@ -91,14 +85,13 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
   };
 
   const handlemore = () => {
-    router("/addexpense")
+    router("/addexpense");
   };
 
   return (
     <>
-      <div className='w-[100%] h-16 flex items-center justify-between mb-8 bg-stone-200 border'>
-        
-        <div>
+      <div className=' fixed w-full h-16 bg-stone-200 border z-10 flex items-center justify-between top-28'>
+        <div className='ml-5'>
           <label htmlFor="category"></label>
           <select
             id="category"
@@ -114,10 +107,7 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
           </select>
           <button className='ml-5 w-36 h-10 rounded-md border bg-slate-600 text-white' onClick={handleFilterByCategory}>Filter by Category</button>
         </div>
-        
-       
-        
-        <div>
+        <div className='ml-5'>
           <label htmlFor="startDate">Start Date:</label>
           <input
             type="date"
@@ -134,7 +124,7 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
           />
           <button className='ml-5 min-w-32 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSearchByDate}>Search by Date</button>
         </div>
-        <div>
+        <div className='ml-5'>
           <input
             type="text"
             placeholder="Search expenses..."
@@ -146,55 +136,53 @@ console.log(sortedExpenses.length,"handleFilterByCategory");
           />
           <button className='ml-5 w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handleSort}>Search</button>
         </div>
+        <button className='ml-5 w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handlemore}>Add More</button>
       </div>
-      <div className='flex items-center justify-end'>
-        <button className='flex items-center w-20 h-10 rounded-md border bg-slate-600 text-white' onClick={handlemore}>Add More</button>
-      </div>
-      <div>
+   
+      <div className=' mt-48'>
         {sortedExpenses.length !== 0 ?
-         <>
-           {reduxdata ? (
-          sortedExpenses?.map((expense, index) => (
-            <div
-              className="group w-[40%] h-40 m-auto mb-4 border border-red-300 flex flex-col items-left p-2 rounded shadow-slate-700 hover:bg-stone-200 ease-in-out"
-              key={index}
-            >
-              <p className="mb-1">
-                <span className="font-bold">Category:</span> {expense.category}
-              </p>
-              <p className="mb-1">
-                <span className="font-bold">Description:</span> {expense.description}
-              </p>
-              <p className="mb-1">
-                <span className="font-bold">Amount:</span> {expense.amount}
-              </p>
-              <p className="mb-1">
-                <span className="font-bold">Date:</span> {expense.date}
-              </p>
-              <div>
-                <button
-                  className="w-28 bg-blue-500 text-white py-1 px-3 rounded mr-2"
-                  onClick={() => handleUpdate(expense._id)}
+          <>
+            {reduxdata ? (
+              sortedExpenses?.map((expense, index) => (
+                <div
+                  className=" group w-[40%] h-40 m-auto mb-4 border border-red-300 flex flex-col items-left p-2 rounded shadow-slate-700 hover:bg-stone-200 ease-in-out"
+                  key={index}
                 >
-                  Update
-                </button>
-                <button
-                  className="w-28 bg-red-500 text-white py-1 px-3 rounded"
-                  onClick={() => handleDelete(expense._id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>Your Expense List is Empty...</p>
-        )}
-         </> : 
-         <>
-         <p className='ml-[36%] mt-[10%] font-semibold text-2xl'>Sorry, no results found for your search...!</p>
-         </>}
-      
+                  <p className="mb-1">
+                    <span className="font-bold">Category:</span> {expense.category}
+                  </p>
+                  <p className="mb-1">
+                    <span className="font-bold">Description:</span> {expense.description}
+                  </p>
+                  <p className="mb-1">
+                    <span className="font-bold">Amount:</span> {expense.amount}
+                  </p>
+                  <p className="mb-1">
+                    <span className="font-bold">Date:</span> {expense.date}
+                  </p>
+                  <div>
+                    <button
+                      className="w-28 bg-blue-500 text-white py-1 px-3 rounded mr-2"
+                      onClick={() => handleUpdate(expense._id)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="w-28 bg-red-500 text-white py-1 px-3 rounded"
+                      onClick={() => handleDelete(expense._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Your Expense List is Empty...</p>
+            )}
+          </> :
+          <>
+            <p className='ml-[36%] mt-[30%] font-semibold text-2xl'>Sorry, no results found for your search...!</p>
+          </>}
       </div>
     </>
   );

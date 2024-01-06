@@ -27,7 +27,7 @@ const Savings = () => {
   const categoriesArray = Object.entries(uniqueCategories).map(([category, amount]) => ({ category, amount }));
 
   return (
-    <div className="w-screen h-[600px] border flex flex-col justify-center items-center">
+    <div className="mt-28 w-screen h-[600px] border flex flex-col justify-center items-center">
       <p className="font-semibold text-2xl mb-10">Expense Summary</p>
       <div className="w-[40%] h-[450px] border">
         <table className=" flex flex-col justify-evenly">

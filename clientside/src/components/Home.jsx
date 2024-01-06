@@ -24,9 +24,9 @@ const Home = () => {
     <>
     {getuserdata && getuserdata?.data?.expenses.length !== 0 ? 
     <>
-      <div>
+      <div className='pt-28 '>
       
-      <h1 className="bg-stone-200 flex items-center justify-center text-3xl font-bold ">Welcome Back {getuserdata?.data?.firstname}...!</h1>
+      <h1 className="bg-stone-200 flex items-center justify-center text-3xl pt-4 font-bold ">Welcome Back {getuserdata?.data?.firstname}...!</h1>
       <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Management System</h2>
       <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
       </div>
@@ -34,8 +34,8 @@ const Home = () => {
     </> : 
     <> 
       
-      <div>
-      <h1 className="bg-stone-200 flex items-center justify-center text-3xl font-bold ">Welcome To</h1>
+      <div className='pt-28'>
+      <h1 className="bg-stone-200 flex items-center justify-center text-3xl font-bold pt-6 ">Welcome To</h1>
       <h2 className="bg-stone-200 flex items-center justify-center text-2xl ">Expense Management System ...!</h2>
       <h2 className='justify-center flex bg-stone-200 '>Manage Your Personal Expenses Seamlessly</h2>
       </div>
@@ -43,7 +43,7 @@ const Home = () => {
     </>
     }
     
-          <div className="w-[100%] h-[500px] m-auto flex border items-center justify-center bg-stone-200">
+          <div className="w-[100%] h-[600px] m-auto flex border items-center justify-center bg-stone-200">
 
         {getuserdata ? (
           <><div className="w-screen h-screen flex items-center justify-around">
@@ -54,7 +54,7 @@ const Home = () => {
 
             </div>
             <button
-        className="bg-blue-500 text-white mb-20 py-2 px-4 rounded hover:bg-blue-950"
+        className="bg-blue-500 text-white ml-24 mb-20 py-2 px-4 rounded hover:bg-blue-950"
         onClick={handleExpense}
       >
         Add Your Expenses

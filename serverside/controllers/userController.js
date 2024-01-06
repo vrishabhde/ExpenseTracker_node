@@ -5,10 +5,16 @@ import { newPasswordValidation } from "../utils/newPasswordValidation.js";
 import { emailValidation } from "../utils/emailValidation.js";
 
 
+
+// registration.js
+
+// registration.js
+
 export const registration = async (req, res) => {
     try {
+        // Validate input using middleware
 
-        const { firstname, lastname, username, email, password, countryCode, contact } = req.body;
+        const { firstname, lastname, username, email, password, country, contact } = req.body;
 
         const checkContact = await users.findOne({ email }).exec();
 
@@ -17,7 +23,15 @@ export const registration = async (req, res) => {
         const hashpassword = await bcrypt.hash(password, 10);
 
         const newUser = new users({
-            firstname, lastname, username, email, contact, countryCode,
+            firstname,
+            lastname,
+            username,
+            email,
+            contact,
+            country: {
+                code: country.code,
+                name: country.name
+            },
             password: hashpassword
         });
 
@@ -25,9 +39,12 @@ export const registration = async (req, res) => {
 
         return res.status(201).json({ status: 201, success: true, message: "Signup Successfully." });
     } catch (error) {
-        return res.status(500).json({ status: 500, success: false, message: "Internal Server Error Occured in controller." });
+        console.error(error); // Log the error for debugging purposes
+        return res.status(500).json({ status: 500, success: false, message: "Internal Server Error Occurred in controller." });
     }
-}
+};
+
+
 
 
 
@@ -256,9 +273,23 @@ export const setBudget = async (req, res) => {
 export const addExpense = async (req, res) => {
     try {
         const { category, description, amount, date, id } = req.body;
+        if (!category) return res.status(400).json({ status: 400, success: false, message: "Category is required" });
+        if (!description) return res.status(400).json({ status: 400, success: false, message: "Description is required" });
+        if (!amount) return res.status(400).json({ status: 400, success: false, message: "Amount is required" });
+        if (!id) return res.status(400).json({ status: 400, success: false, message: "ID is required" });
 
-        // Parse the date and format it as "dd Mon yyyy" or use the current date if not provided
-        const formattedDate = date ? formatDates(new Date(date)) : formatDate(new Date());
+        const selectedDate = new Date(date);
+        const currentDate = new Date();
+
+        if (selectedDate > currentDate) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Cannot add expenses for future dates."
+            });
+        }
+
+        const formattedDate = date ? formatDates(selectedDate) : formatDate(currentDate);
 
         const user = await users.findById(id);
 
@@ -309,6 +340,8 @@ function formatDates(date) {
     const year = date.getFullYear();
     return `${day} ${month} ${year}`;
 }
+
+
 
 
 

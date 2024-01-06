@@ -59,7 +59,7 @@ const Updateuser = () => {
 
     return (
         <>
-      <div className="flex items-center justify-center h-screen">
+      <div className="mt-10 flex items-center justify-center h-screen">
   <div className="max-w-md w-full bg-white p-6 rounded-md shadow-md border border-gray-300 hover:shadow-lg hover:border-blue-500 transition duration-300 ease-in-out">
     <h1 className="text-2xl font-bold mb-4">Update Profile</h1>
     <form onSubmit={handleSubmit} className="space-y-4">
