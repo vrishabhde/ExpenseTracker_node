@@ -14,6 +14,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use("/api",router);
 
+
 mongoose.connect(process.env.MONGODB)
 .then(()=>{console.log("DB connection established")})
 .catch(()=>{console.log("DB error:",err)})

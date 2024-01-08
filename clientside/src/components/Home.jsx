@@ -61,7 +61,8 @@ const Home = () => {
       </button>
             <img
               // src='https://assets.gqindia.com/photos/608c135f6e6a489a62cd254d/master/pass/Apps%20for%20finance%20management.jpg'
-              src="https://www.drupal.org/files/project-images/expense-income.png" 
+              // src="https://www.drupal.org/files/project-images/expense-income.png"
+              src='https://thumbs.dreamstime.com/b/budget-expenses-folders-mean-business-finances-budgeting-meaning-38118025.jpg' 
               alt="Expense Tracker"
               className="w-[300px] h-[45%] mb-24 mt-6 rounded shadow-lg lg:w-1/3 xl:w-1/3"
             />
